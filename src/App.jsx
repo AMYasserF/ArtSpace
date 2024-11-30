@@ -1,7 +1,9 @@
 import Home from "./pages/home"
+import Login from "./pages/Loginpage"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider} from 'react-router-dom';
+import LoginForm from './components/LoginFrom';
 function App() {
  
   const router=createBrowserRouter(
@@ -17,8 +19,7 @@ function App() {
 function Layout(){
   return(
       <>
-      <Header></Header>
-      <Outlet/>
+      <Login></Login>
       <Footer></Footer>
       </>
   )
