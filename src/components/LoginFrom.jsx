@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 const GridLoginForm = ({ onRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    console.log("Logging....");
+    try{
+    const resp=await axios.post("http://localhost:3000/login", {username: username, password: password})
+    console.log("Logged in successfully");
+    console.log(resp);
+    }
+  catch(err){
+    console.log(err);
+  }
   };
-
   return (
     <div className="auth-background">
       <div className="grid-login-container">

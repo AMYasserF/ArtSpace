@@ -1,35 +1,61 @@
-import Home from "./pages/home"
-import Login from "./pages/Loginpage"
-import Header from "./components/Header"
-import Footer from "./components/Footer"
-import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import Home from "./pages/home";
+import Login from "./pages/Loginpage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
 function App() {
- 
-  const router=createBrowserRouter(
+  const [role, setRole] = useState(getCookie('Role'));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newRole = getCookie('Role');
+      if (newRole !== role) {
+        setRole(newRole);
+      }
+    }, 1000); // Check for changes every second
+
+    return () => clearInterval(interval);
+  }, [role]);
+
+  const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/' element={
-        <Layout/>}>
-        <Route index element={<Home/>}/>
-        <Route path='/home' element={<Home/>}/>
-        <Route path='*' element={<Home/>}/>
-        </Route>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+      </Route>
     )
-)
-function Layout(){
-  return(
+  );
+  function Layout(){
+    return(
+        <>
+        <Header Role={role}></Header>
+        <Outlet></Outlet>
+        <Footer></Footer>
+        </>
+    )
+  }
+  
+    return (
       <>
-      <Login></Login>
-      <Footer></Footer>
+          <RouterProvider router={router}/>
       </>
-  )
+    )
 }
 
-  return (
-    <>
-        <RouterProvider router={router}/>
-    </>
-  )
-}
-
-export default App
+export default App;

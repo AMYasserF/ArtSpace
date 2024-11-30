@@ -1,31 +1,78 @@
-import React from "react";
+import React, { useState }  from "react";
+import axios  from "axios";
+const apiUrl = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
 
-
+// Get the token from the cookies
 const GridRegistrationForm = ({ onBack }) => {
+  const [name,setName]=useState("");
+  const [Email,setEmail]=useState("");
+  const [Pass,setPass]=useState("");
+  const [Role,setRole]=useState("");
+  const [Username,setUsername]=useState("");
+  const [Gender,setGender]=useState("");
+  const [Address,setAddress]=useState("");
+  const [Age,setAge]=useState("");
+  const [CardNumber,setCardNumber]=useState("");
+  const [Expiry,setExpiry]=useState("");
+  const [Phone,setPhone]=useState("");
+  const [reg,setReg]=useState(false);
+async function handleSubmit(e){
+    e.preventDefault();
+    try{
+  const resp=await axios.post(`${apiUrl}/register`,{
+  name:name,
+  email:Email,
+  password:Pass,
+  role:Role,
+  username:Username,
+  gender:Gender,
+  address:Address,
+  age:Age,
+  cardNumber:CardNumber,
+  cardExpiry:Expiry,
+  phoneNumber:Phone,
+})
+console.log(resp);
+setReg(true);
+const token = getCookie('Role');
+console.log(token);
+console.log("Registered");
+}
+catch(err){
+console.log(err);
+}
+}
   return (
     <div className="auth-background">
       <div className="grid-registration-container">
         <div className="registration-header">REGISTER</div>
-        <form className="grid-registration-form">
+        <form className="grid-registration-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
-            <input type="text" id="name" placeholder="Enter your full name" required />
+            <input type="text" id="name" placeholder="Enter your full name" required  onChange={(e)=>setName(e.currentTarget.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required />
+            <input type="email" id="email" placeholder="Enter your email" required  onChange={(e)=>setEmail(e.currentTarget.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" placeholder="Choose a unique username" required />
+            <input type="text" id="username" placeholder="Choose a unique username" required  onChange={(e)=>setUsername(e.currentTarget.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="Create a password" required />
+            <input type="password" id="password" placeholder="Create a password" required  onChange={(e)=>setPass(e.currentTarget.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone Number (Optional)</label>
-            <input type="tel" id="phone" placeholder="Enter your phone number" />
+            <input type="tel" id="phone" placeholder="Enter your phone number"  onChange={(e)=>setPhone(e.currentTarget.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="visa-card">Visa Card Number</label>
@@ -34,6 +81,7 @@ const GridRegistrationForm = ({ onBack }) => {
               id="visa-card"
               placeholder="Enter your Visa card number"
               required
+              onChange={(e)=>setCardNumber(e.currentTarget.value)}
             />
           </div>
           <div className="form-group">
@@ -43,20 +91,32 @@ const GridRegistrationForm = ({ onBack }) => {
               id="expiry"
               placeholder="MM/YY"
               required
+              onChange={(e)=>setExpiry(e.currentTarget.value)}
             />
           </div>
           <div className="form-group">
             <label htmlFor="age">Age</label>
-            <input type="number" id="age" placeholder="Enter your age" required />
+            <input type="number" id="age" placeholder="Enter your age" required  onChange={(e)=>setAge(e.currentTarget.value)} />
           </div>
           <div className="form-group">
             <label htmlFor="role">Role</label>
-            <select id="role" required>
+            <select id="role" required  onChange={(e)=>setRole(e.currentTarget.value)}>
               <option value="">Select a role</option>
-              <option value="client">Client</option>
-              <option value="artist">Artist</option>
-
+              <option value="Client">Client</option>
+              <option value="Artist">Artist</option>
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="gender">Gender</label>
+            <select id="gender" required  onChange={(e)=>setGender(e.currentTarget.value)}>
+              <option value="">Select your Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="Address">Address</label>
+            <input type="text" id="address" placeholder="Enter your address" required  onChange={(e)=>setAddress(e.currentTarget.value)}/>
           </div>
           <div className="form-buttons">
             <button type="submit" className="registration-button">
@@ -64,6 +124,7 @@ const GridRegistrationForm = ({ onBack }) => {
             </button>
           </div>
         </form>
+        {reg&&(<div className='alert alert-success'>Registered Successfully</div>)}
       </div>
     </div>
   );

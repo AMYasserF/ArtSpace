@@ -2,7 +2,8 @@ import React from 'react';
 import logo from '../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
 
-const Header = () => {
+const Header = (props) => {
+  console.log(props.Role);
   return (
     <header className="header">
       <div className="header-container">
@@ -24,6 +25,9 @@ const Header = () => {
           <NavLink to="/artists" className="nav-link">Artists</NavLink>
           <NavLink to="/about" className="nav-link">About</NavLink>
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
+          <NavLink to="/Login" className="nav-link">Login/SignUp</NavLink>
+          {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
+          {props.Role==='Artist'?<NavLink to="/artist" className="nav-link">artist</NavLink>:null}
         </nav>
 
         {/* Search Bar */}
