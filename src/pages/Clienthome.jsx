@@ -4,13 +4,12 @@ import WelcomeComp from '../components/Previews/WelcomeComp';
 import AuctionsPreview from '../components/Previews/AuctionPreview';
 import ExhibitionsPreview from '../components/Previews/ExhibitionPreview';
 
-function ClientHome() {
+function ClientHome(props) {
   //const { clientusername } = useParams();
   let clientusername = "mohamed";
-
   return (
     <div>
-      <WelcomeComp  name= {clientusername}/> 
+      <WelcomeComp  name= {props.name}/> 
       <GallaryPreview/> 
       <AuctionsPreview/>
       <ExhibitionsPreview/> 

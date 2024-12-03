@@ -23,35 +23,43 @@ function getCookie(name) {
 
 function App() {
   const [role, setRole] = useState(getCookie('Role'));
-
+  const [name, setName] = useState(getCookie('name'));
+  const [logged, setLogged] = useState(getCookie('Logged'));
   useEffect(() => {
     const interval = setInterval(() => {
       const newRole = getCookie('Role');
+      const newName = getCookie('name');
+      const newLogged = getCookie('Logged');
       if (newRole !== role) {
         setRole(newRole);
+      }
+      if (newName !== name) {
+        setName(newName);
+      }
+      if (newLogged !== logged) {
+        setLogged(newLogged);
       }
     }, 1000); // Check for changes every second
 
     return () => clearInterval(interval);
   }, [role]);
-
+  console.log(name);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path='/home' element={<ClientHome />} />
+        <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/Client/:clientusername' element={<ClientHome />}/>
         <Route path='/Artist/:artistusername' element={<ArtistHome />} />
         <Route path='/gallery' element={<Gallery/>} />
-
       </Route>
     )
   );
   function Layout(){
     return(
         <>
-        <Header Role={role}></Header>
+        <Header Role={role} Logged={logged}></Header>
         <Outlet></Outlet>
         <Footer></Footer>
         </>

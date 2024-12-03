@@ -1,9 +1,12 @@
 import React from 'react';
 import logo from '../assets/images/logo.png';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
-  console.log(props.Role);
+  async function handleLogout(){
+    await axios.post("http://localhost:3000/register/logout");
+    }
   return (
     <header className="header">
       <div className="header-container">
@@ -29,6 +32,7 @@ const Header = (props) => {
           {props.Role == null && <NavLink to="/Login" className="nav-link">Login/SignUp</NavLink>}
           {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
           {props.Role==='Artist'?<NavLink to="/artist" className="nav-link">artist</NavLink>:null}
+          {props.Logged==='true'?<button className="nav-link" onClick={handleLogout}>Logout</button>:null}
         </nav>
 
         {/* Search Bar */}
