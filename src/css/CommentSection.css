@@ -1,0 +1,8 @@
+.comment-section {
+    margin-top: 20px;
+    flex: 1; /* Makes the comment section take up the remaining space */
+    overflow-y: auto; /* Enables vertical scrolling */
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+  

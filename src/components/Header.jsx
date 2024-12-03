@@ -31,8 +31,14 @@ const Header = (props) => {
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
           {props.Role == null && <NavLink to="/Login" className="nav-link">Login/SignUp</NavLink>}
           {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
-          {props.Role==='Artist'?<NavLink to="/artist" className="nav-link">artist</NavLink>:null}
+
+          {/*change the not equal later  */}
+          {props.Role!='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
+
+
+
           {props.Logged==='true'?<button className="nav-link" onClick={handleLogout}>Logout</button>:null}
+
         </nav>
 
         {/* Search Bar */}
