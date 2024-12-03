@@ -23,6 +23,8 @@ const GridRegistrationForm = ({ onBack }) => {
   const [Expiry,setExpiry]=useState("");
   const [Phone,setPhone]=useState("");
   const [reg,setReg]=useState(false);
+
+
 async function handleSubmit(e){
     e.preventDefault();
     try{
@@ -39,6 +41,7 @@ async function handleSubmit(e){
   cardExpiry:Expiry,
   phoneNumber:Phone,
 })
+
 console.log(resp);
 setReg(true);
 const token = getCookie('Role');

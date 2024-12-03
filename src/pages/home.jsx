@@ -7,10 +7,10 @@ import TestimonialsSection from '../components/TestimonialsSection';
 const Home=()=>{
     return(
         <>
-    <Hero></Hero>
-    <HighlightsSection></HighlightsSection>
-    <AboutPlatform></AboutPlatform>
-    <TestimonialsSection></TestimonialsSection>
+    <Hero/>
+    <HighlightsSection/>
+    <AboutPlatform/>
+    <TestimonialsSection/>
     </>
     )
 }
