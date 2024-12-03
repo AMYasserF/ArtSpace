@@ -8,6 +8,7 @@ import ArtistHome from './pages/ArtistHome';
 import Gallery from './pages/Gallery';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
+import Portfolio from './pages/Portfolio';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 if (process.env.NODE_ENV === 'production') {
@@ -50,9 +51,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/Client/:clientusername' element={<ClientHome />}/>
-        <Route path='/Artist/:artistusername' element={<ArtistHome />} />
         <Route path='/gallery' element={<Gallery/>} />
+        <Route path='/portfolio' element={<Portfolio/>} />
       </Route>
     )
   );
