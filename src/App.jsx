@@ -3,6 +3,9 @@ import Home from "./pages/home";
 import Login from "./pages/Loginpage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ClientHome from './pages/Clienthome';
+import ArtistHome from './pages/ArtistHome';
+import Gallery from './pages/Gallery';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -36,8 +39,12 @@ function App() {
     createRoutesFromElements(
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/home' element={<ClientHome />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/Client/:clientusername' element={<ClientHome />}/>
+        <Route path='/Artist/:artistusername' element={<ArtistHome />} />
+        <Route path='/gallery' element={<Gallery/>} />
+
       </Route>
     )
   );
