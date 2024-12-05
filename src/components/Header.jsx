@@ -41,14 +41,7 @@ const Header = (props) => {
 
         </nav>
 
-        {/* Search Bar */}
-        <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Search Artwork..." 
-            className="search-input"
-          />
-        </div>
+       
 
         {/* Mobile Menu Toggle */}
         <div className="mobile-menu">
