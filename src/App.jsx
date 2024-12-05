@@ -8,11 +8,15 @@ import ArtistHome from './pages/ArtistHome';
 import Gallery from './pages/Gallery';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
+<<<<<<< Updated upstream
 import Portfolio from './pages/Portfolio';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+=======
+//import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+>>>>>>> Stashed changes
 
 if (process.env.NODE_ENV === 'production') {
-  disableReactDevTools();
+ // disableReactDevTools();
 }
 
 function getCookie(name) {
