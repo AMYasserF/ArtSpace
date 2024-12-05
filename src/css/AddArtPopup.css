@@ -1,0 +1,139 @@
+
+.add-art-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  background: rgb(244,241,225);
+  width: 500px;
+  max-width: 90%;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  animation: slide-down 0.3s ease; 
+  text-align: center;
+
+}
+
+
+.popup-content h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+.art-title,
+.art-description,
+.base-price,
+.upload-art {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.art-description{
+  font-family: Arial, sans-serif; 
+  line-height: 1rem;
+  height: 40%;
+  resize: none;
+  
+}
+
+.art-description::placeholder{
+  font-family: Arial, sans-serif; 
+  font-size: 1rem;                
+  color: #888;                   
+  text-align: left;               
+  line-height: 1.5;               
+}
+
+
+.popup-content input:focus {
+  border-color: #7d9b5e;
+  box-shadow: 0 0 8px rgba(125, 155, 94, 0.2);
+}
+
+
+.popup-content label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  display: block;
+  text-align: left;
+}
+
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 80%;
+}
+
+
+.popup-buttons button {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.popup-buttons button:first-child {
+  background-color: #7d9b5e;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.popup-buttons button:first-child:hover {
+  background-color: #6a874e;
+}
+
+.popup-buttons button:last-child {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.popup-buttons button:last-child:hover {
+  background-color: #c0392b;
+}
+
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
