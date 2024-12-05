@@ -6,11 +6,18 @@
   top: 0;
   left: 0;
   right: 0;
+<<<<<<< Updated upstream
   z-index: 50; 
   width: 100%;
   padding: 1rem;
  
   
+=======
+  z-index: 50;
+  width: 97%;
+  padding: 1rem;
+  justify-self: center;
+>>>>>>> Stashed changes
 }
 
 .header-container {
@@ -58,23 +65,6 @@
   color: #c5a900; /* Gold hover effect */
 }
 
-.search-container {
-  display: block;
-  margin: auto;
-}
-
-.search-input {
-  padding: 0.5rem;
-  border-radius: 0.375rem;
-  border: 1px solid #c5a900; /* Gold border */
-  font-size: 1rem;
-  width: 250px;
-  color: #333333;
-}
-
-.search-input::placeholder {
-  color: #333333; /* Dark placeholder text */
-}
 
 .mobile-menu {
   display: none;
@@ -651,20 +641,21 @@
 
 /* General styles */
 .auth-background {
-  height: 100vh;
+  height: 120vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #000000, #f2e49c);
   background-size: cover;
   background-position: center;
+  background: #f4f1e1;
 }
 
 /* Form container */
 .grid-registration-container {
   width: 600px;
+  height: 665px;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.1); /* Transparent */
+  background: #f9f9f9;
   border: 1px solid rgba(255, 215, 0, 0.5); 
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -698,7 +689,7 @@
 }
 
 .grid-registration-form .form-group label {
-  color: #ffffff;
+  color: black;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -710,8 +701,9 @@
   border: none;
   outline: none;
   border-radius: 5px;
-  background: rgba(0, 0, 0, 0.4); 
-  color: #ffffff;
+  background: #ffffff;
+  border:1px solid gold;
+  color: black;
 }
 
 /* Buttons */
@@ -766,7 +758,7 @@
 .grid-login-container {
   width: 500px;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.1); 
+  background: #f9f9f9; 
   border: 1px solid rgba(255, 215, 0, 0.5); 
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -775,7 +767,7 @@
 
 /* Header */
 .login-header {
-  background: #c5a900; 
+  background: #d6ba0b; 
   color: #ffffff;
   padding: 1rem;
   font-size: 1.8rem;
@@ -797,7 +789,7 @@
 }
 
 .grid-login-form .form-group label {
-  color: #ffffff;
+  color: #000000;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -809,9 +801,10 @@
   border: none;
   outline: none;
   border-radius: 5px;
-  background: rgba(0, 0, 0, 0.4);
+  background: #ffffff;
   margin-left: 2rem;
-  color: #ffffff;
+  color: #000000;
+  border: 1px solid gold;
 }
 
 
@@ -822,7 +815,7 @@
 }
 
 .forgot-password-link {
-  color: #c5a900; 
+  color: #d6ba0b; 
   font-size: 0.9rem;
   text-decoration: none;
 }
@@ -850,7 +843,7 @@
 }
 
 .login-button {
-  background: #c5a900; 
+  background: #d6ba0b; 
 }
 
 .login-button:hover {
