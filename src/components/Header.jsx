@@ -41,8 +41,7 @@ const Header = (props) => {
 
         </nav>
 
-       
-
+      
         {/* Mobile Menu Toggle */}
         <div className="mobile-menu">
           <button className="mobile-menu-btn">
