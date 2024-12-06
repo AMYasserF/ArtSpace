@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import PortfolioCard from '../components/Portfolio/PortofolioCard.jsx';
 import ArtPopUp from '../components/gallery/ArtPopUp';
+import AddArtPopup from '../components/Portfolio/AddArtPopup.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPalette } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
 
 import '../css/Portfolio.css';
 
 const Portfolio = () => {
   const [selectedArt, setSelectedArt] = useState(null);
+  const [addArt , setAddArt] = useState(false);
+  const [requestAuction , setRequestAuction] = useState(false);
 
   const [arts, setArts] = useState([
     {
@@ -113,8 +119,50 @@ const Portfolio = () => {
   };
 
   const handleAuctionRequest = (art) => {
-    console.log(`Request auction for: ${art.title}`);
-    // Add auction request logic here
+    setRequestAuction(true);
+    
+  };
+
+  const handleDeleteArt=(art)=>{
+    console.log(`delete art request:${art.title}`);
+    // to do -->   delete art
+  }
+
+  const handleAddArt = async (artDetails) => {
+  
+    const formData = new FormData();
+    formData.append("image", artDetails.image);
+    formData.append("title", artDetails.title);
+    formData.append("description", artDetails.description);
+    formData.append("basePrice", artDetails.basePrice || "");
+   
+    
+
+    try {
+      
+      const response = await axios.post("http://localhost:3000/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { imageUrl } = response.data;
+
+      // Add the new artwork to the artworks state
+      const newArtwork = {
+        id: arts.length+1,
+        title: artDetails.title,
+        description: artDetails.description,
+        basePrice: artDetails.basePrice,
+        imageUrl, // Use the image URL returned by the backend
+      };
+      console.log(newArtwork);
+
+      setArts((prevArts) => [...prevArts, newArtwork]);
+     // setShowPopup(false); // Close the popup
+    } catch (error) {
+      console.error("Error uploading art:", error.response?.data || error.message);
+    }
   };
 
 
@@ -129,10 +177,17 @@ const Portfolio = () => {
             art={art}
             onClick={handleArtClick}
             onAuctionRequest={handleAuctionRequest}
+            onDelete={handleDeleteArt}
           />
         ))}
+        <button className='Add-art-button' onClick={()=>setAddArt(true)}>
+          <span className='add-button-text'>Add New Art</span>
+          <br/>
+          <FontAwesomeIcon icon={faPalette}  style={{ fontSize: '1.5em', color: '#dfdf82' }} />
+        </button>
       </div>
       {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} TheArtist={true}  onSave={handleEditSave}/>}
+      {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
       
         
     </div>

@@ -9,10 +9,11 @@ import Gallery from './pages/Gallery';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
 import Portfolio from './pages/Portfolio';
-import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+//import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 if (process.env.NODE_ENV === 'production') {
-  disableReactDevTools();
+  //disableReactDevTools();
 }
 
 function getCookie(name) {
