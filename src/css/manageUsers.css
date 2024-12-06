@@ -1,0 +1,48 @@
+.manage-users {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .user-list {
+    max-height: 400px; /* Limit height for scrolling */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    background: #f9f9f9;
+  }
+  
+  .user-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .user-row:last-child {
+    border-bottom: none;
+  }
+  
+  .user-row span {
+    font-size: 1rem;
+  }
+  
+  .user-row button {
+    background: #c5a900; /* Gold */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .user-row button:hover {
+    background: #b88c00; /* Darker gold */
+  }
+  
