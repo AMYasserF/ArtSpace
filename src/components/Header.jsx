@@ -33,7 +33,7 @@ const Header = (props) => {
           {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
 
           {/*change the not equal later  */}
-          {props.Role!='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
+          {props.Role==='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
 
 
 

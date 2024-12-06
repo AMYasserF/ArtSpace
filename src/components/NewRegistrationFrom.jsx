@@ -1,5 +1,7 @@
 import React, { useState }  from "react";
 import axios  from "axios";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const apiUrl = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 function getCookie(name) {
@@ -47,13 +49,20 @@ setReg(true);
 const token = getCookie('Role');
 console.log(token);
 console.log("Registered");
+toast.success("Registered Successfully");
 }
 catch(err){
-console.log(err);
-}
+  console.log("Error in registration");
+  if(err.response){
+    toast.error(err.response.data);
+  }
+  else
+    toast.error("Internal server error sorry !");
+  console.log(err);}
 }
   return (
     <div className="auth-background">
+      <ToastContainer/>
       <div className="grid-registration-container">
         <div className="registration-header">REGISTER</div>
         <form className="grid-registration-form" onSubmit={handleSubmit}>

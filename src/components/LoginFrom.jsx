@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const GridLoginForm = ({ onRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,13 +13,20 @@ const GridLoginForm = ({ onRegister }) => {
     const resp=await axios.post("http://localhost:3000/login", {username: username, password: password})
     console.log("Logged in successfully");
     console.log(resp);
+    toast.success("Registered Successfully");
     }
   catch(err){
+    if(err.response){
+      toast.error(err.response.data);
+    }
+    else
+      toast.error("Internal server error sorry !");
     console.log(err);
   }
   };
   return (
     <div className="auth-background">
+      <ToastContainer/>
       <div className="grid-login-container">
         <div className="login-header">SIGN IN</div>
         <form className="grid-login-form" onSubmit={handleSubmit}>

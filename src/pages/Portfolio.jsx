@@ -1,119 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PortfolioCard from '../components/Portfolio/PortofolioCard.jsx';
 import ArtPopUp from '../components/gallery/ArtPopUp';
 import AddArtPopup from '../components/Portfolio/AddArtPopup.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-
+import { ToastContainer,toast } from 'react-toastify';
 import '../css/Portfolio.css';
 
 const Portfolio = () => {
   const [selectedArt, setSelectedArt] = useState(null);
   const [addArt , setAddArt] = useState(false);
   const [requestAuction , setRequestAuction] = useState(false);
+  const [arts, setArts] = useState([]);
+  useEffect(() => {
+    const fetchArts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/artist/arts");
+        setArts(response.data);
+      } catch (error) {
+        console.log("Error fetching user arts", error.response?.data || error.message);
+      }
+    };
 
-  const [arts, setArts] = useState([
-    {
-      id: 1,
-      title: 'Mystic Forest',
-      imageUrl: './src/assets/testImages/download.jpg',
-      description: 'An enchanting painting of a mysterious forest.',
-      basePrice: '$300',
-      creator: {
-        username: 'ArtistName',
-        profilePic: './src/assets/testImages/default-profile.jpg',
-      },
-      comments: [
-        {
-        user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-            rating: 5, 
-            text: 'Amazing work!' },
-        { 
-          user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 4, text: 'Really beautiful!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 5, text: 'Amazing work!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 2, text: 'over-priced' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 5, text: 'Amazing work!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 2, text: 'over-priced' }
-      ],
-    },
-    {
-      id: 2,
-      title: 'Ocean Bliss',
-      imageUrl: './src/assets/testImages/download (1).jpg',
-      description: 'A serene view of the ocean.',
-      basePrice: '$250',
-      creator: {
-        username: 'ArtistName',
-        profilePic: './src/assets/testImages/default-profile.jpg',
-      },
-      comments: [{
-        user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-            rating: 5, 
-            text: 'Amazing work!' },
-        { 
-          user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 4, text: 'Really beautiful!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 5, text: 'Amazing work!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 2, text: 'over-priced' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 5, text: 'Amazing work!' },
-        { user:{ 
-          name:"ali",
-          profilepic:'./src/assets/testImages/default-profile.jpg'
-        } ,
-        rating: 2, text: 'over-priced' },
-      ],
-    },
-    // Add more arts here...
-  ]);
-
+    fetchArts();
+  }, []); // Empty dependency array ensures this runs only once on mount
   const handleEditSave = (updatedArt) => {
     setArts((prevArts) =>
       prevArts.map((art) => (art.id === updatedArt.id ? updatedArt : art))
     );
   };
-
+  console.log(arts);
   const handleArtClick = (art) => {
     setSelectedArt(art);
   };
@@ -140,7 +57,7 @@ const Portfolio = () => {
 
     try {
       
-      const response = await axios.post("http://localhost:3000/upload", formData, {
+      const response = await axios.post("http://localhost:3000/arts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -161,17 +78,24 @@ const Portfolio = () => {
       setArts((prevArts) => [...prevArts, newArtwork]);
      // setShowPopup(false); // Close the popup
     } catch (error) {
+      if(error.response){
+        toast.error(error.response.data);
+      }
+      else
+        toast.error("Internal server error sorry !");
       console.error("Error uploading art:", error.response?.data || error.message);
     }
   };
 
 
-
+  //console.log(arts);
   return (
     <div className="portfolio">
+      <ToastContainer/>
       <h1 className="portfolio-title">My Portfolio</h1>
       <div className="portfolio-grid">
         {arts.map((art) => (
+          console.log(art),
           <PortfolioCard
             key={art.id}
             art={art}

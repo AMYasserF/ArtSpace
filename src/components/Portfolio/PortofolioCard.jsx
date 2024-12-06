@@ -8,7 +8,7 @@ import '../../css/PortfolioCard.css';
 const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) => 
   {
     const [requestAuction , setRequestAuction] = useState(false);
-
+    console.log(art);
 
   return (
     <div className="portfolio-card" onClick={() => onClick(art)}>
@@ -21,8 +21,8 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) =>
       >
         ✖
       </button>
-      <img src={art.imageUrl} alt={art.title} className="portfolio-card-image" />
-      <h3 className="portfolio-card-title">{art.title}</h3>
+      <img src={art.photo} alt={art.artname} className="portfolio-card-image" />
+      <h3 className="portfolio-card-title">{art.artname}</h3>
       <button
         className="request-auction-button"
         onClick={(e) => {
