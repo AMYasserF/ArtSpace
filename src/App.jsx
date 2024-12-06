@@ -9,7 +9,7 @@ import Gallery from './pages/Gallery';
 import AdminDashboard from './components/admin/Dashboard'
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
-<<<<<<< Updated upstream
+
 import Portfolio from './pages/Portfolio';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -17,10 +17,6 @@ import Portfolio from './pages/Portfolio';
 if (process.env.NODE_ENV === 'production') {
   //disableReactDevTools();
 }
-=======
-
-import Portfolio from './pages/Portfolio';
->>>>>>> Stashed changes
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -67,7 +63,7 @@ function App() {
     return(
         <>
         <Header></Header>
-        <AdminDashboard></AdminDashboard>
+        <Outlet></Outlet>
         <Footer></Footer>
         </>
     )
