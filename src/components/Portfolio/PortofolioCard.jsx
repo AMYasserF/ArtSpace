@@ -13,7 +13,7 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) =>
   return (
     <div className="portfolio-card" onClick={() => onClick(art)}>
       <button
-        className="delete-button"
+        className="delete-button-portifilio"
         onClick={(e) => {
           e.stopPropagation(); 
           onDelete(art); 

@@ -13,7 +13,7 @@
 }
 
 
-.popup-content {
+.popup-content-portifilio {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -26,19 +26,20 @@
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   animation: slide-down 0.3s ease; 
   text-align: center;
+  height: 80%;
 
 }
 
 
-.popup-content h2 {
+.popup-content-portifilio h2 {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 20px;
 }
-.art-title,
-.art-description,
-.base-price,
+.art-title-portifilio,
+.art-description-portifilio,
+.base-price-portifilio,
 .upload-art {
   display: block;
   width: 80%;
@@ -52,15 +53,15 @@
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.art-description{
+.art-description-portifilio{
   font-family: Arial, sans-serif; 
   line-height: 1rem;
-  height: 40%;
+  height: 50%;
   resize: none;
   
 }
 
-.art-description::placeholder{
+.art-description-portifilio::placeholder{
   font-family: Arial, sans-serif; 
   font-size: 1rem;                
   color: #888;                   
@@ -69,13 +70,13 @@
 }
 
 
-.popup-content input:focus {
+.popup-content-portifilio input:focus {
   border-color: #7d9b5e;
   box-shadow: 0 0 8px rgba(125, 155, 94, 0.2);
 }
 
 
-.popup-content label {
+.popup-content-portifilio label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #555;
@@ -86,7 +87,7 @@
 }
 
 
-.popup-buttons {
+.popup-buttons-portifilio {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -96,7 +97,7 @@
 }
 
 
-.popup-buttons button {
+.popup-buttons-portifilio button {
   flex: 1;
   padding: 10px;
   font-size: 1rem;
@@ -107,22 +108,22 @@
 }
 
 
-.popup-buttons button:first-child {
+.popup-buttons-portifilio button:first-child {
   background-color: #7d9b5e;
   color: #fff;
   margin-right: 10px;
 }
 
-.popup-buttons button:first-child:hover {
+.popup-buttons-portifilio button:first-child:hover {
   background-color: #6a874e;
 }
 
-.popup-buttons button:last-child {
+.popup-buttons-portifilio button:last-child {
   background-color: #e74c3c;
   color: #fff;
 }
 
-.popup-buttons button:last-child:hover {
+.popup-buttons-portifilio button:last-child:hover {
   background-color: #c0392b;
 }
 

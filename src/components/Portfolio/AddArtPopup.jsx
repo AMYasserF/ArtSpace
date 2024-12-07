@@ -1,5 +1,6 @@
 import React, { useState } from "react";
- import "../../css/AddArtPopup.css";
+import "../../css/AddArtPopup.css";
+
 
 const AddArtPopup = ({ onClose, onAdd }) => {
   const [artDetails, setArtDetails] = useState({
@@ -28,12 +29,13 @@ const AddArtPopup = ({ onClose, onAdd }) => {
     onClose(); 
   };
 
+  
   return (
     <div className="add-art-popup">
-      <div className="popup-content">
+      <div className="popup-content-portifilio">
         <h2>Add New Art</h2>
           <input
-          className="art-title"
+          className="art-title-portifilio"
            placeholder="Art Title"
             type="text"
             name="title"
@@ -42,16 +44,15 @@ const AddArtPopup = ({ onClose, onAdd }) => {
             required
           />
           <textarea
-            className="art-description"
+            className="art-description-portifilio"
             placeholder="Art description"
             name="description"
             value={artDetails.description}
             onChange={handleInputChange}
             required
           />
-
           <input
-            className="base-price"
+            className="base-price-portifilio"
             placeholder="base price (optional)"
             type="number"
             name="basePrice"
@@ -64,7 +65,7 @@ const AddArtPopup = ({ onClose, onAdd }) => {
           </label>
           <input className="upload-art" type="file" accept="image/*" onChange={handleImageUpload} />
        
-        <div className="popup-buttons">
+        <div className="popup-buttons-portifilio">
           <button onClick={handleSubmit}>Add Art</button>
           <button onClick={onClose}>Cancel</button>
         </div>
