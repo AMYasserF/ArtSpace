@@ -13,7 +13,7 @@ const GridLoginForm = ({ onRegister }) => {
     const resp=await axios.post("http://localhost:3000/login", {username: username, password: password})
     console.log("Logged in successfully");
     console.log(resp);
-    toast.success("Registered Successfully");
+    toast.success("Hello"+username+"! You are logged in successfully");
     }
   catch(err){
     if(err.response){

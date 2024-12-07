@@ -9,7 +9,6 @@ import Gallery from './pages/Gallery';
 import AdminDashboard from './components/admin/Dashboard'
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
-<<<<<<< Updated upstream
 import Portfolio from './pages/Portfolio';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -17,10 +16,6 @@ import Portfolio from './pages/Portfolio';
 if (process.env.NODE_ENV === 'production') {
   //disableReactDevTools();
 }
-=======
-
-import Portfolio from './pages/Portfolio';
->>>>>>> Stashed changes
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -60,14 +55,15 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery/>} />
         <Route path='/portfolio' element={<Portfolio/>} />
+        <Route path='/admin' element={<AdminDashboard />} />
       </Route>
     )
   );
   function Layout(){
     return(
         <>
-        <Header></Header>
-        <AdminDashboard></AdminDashboard>
+        <Header Role={role} Logged={logged}></Header>
+        <Outlet></Outlet>
         <Footer></Footer>
         </>
     )

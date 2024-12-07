@@ -5,7 +5,12 @@ import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
   async function handleLogout(){
+    try{
     await axios.post("http://localhost:3000/register/logout");
+    }
+    catch(err){
+      console.log(err);
+    }
     }
   return (
     <header className="header">
