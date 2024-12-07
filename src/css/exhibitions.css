@@ -1,0 +1,70 @@
+.exhibitions {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .exhibition-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .exhibition-card {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 500px;
+    height: 500px;;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .exhibition-card h2 {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  
+  .artwork {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .artwork img {
+    max-width: 50px;
+    max-height: 50px;
+  }
+  
+  .remove-artwork {
+    color: red;
+    cursor: pointer;
+  }
+  
+  .modify-button,
+  .manage-artworks-button,
+  .add-exhibition-button {
+    background: #c5a900;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin:10px;
+  }
+  
+  .modify-button:hover,
+  .manage-artworks-button:hover,
+  .add-exhibition-button:hover {
+    background: #b88c00;
+  }
+  

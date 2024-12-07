@@ -8,7 +8,19 @@ import { useState } from 'react';
 
 const Gallery = () => {
   const [selectedPost, setSelectedPost] = useState(null);
+  const [arts, setArts] = useState([]);
+  useEffect(() => {
+    const fetchArts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/artist/arts");
+        setArts(response.data);
+      } catch (error) {
+        console.log("Error fetching user arts", error.response?.data || error.message);
+      }
+    };
 
+    fetchArts();
+  }, []); // Empty dependency array ensures this runs only once on mount
   function handlePostClick (post){
         setSelectedPost(post);
   }

@@ -5,7 +5,12 @@ import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
   async function handleLogout(){
+    try{
     await axios.post("http://localhost:3000/register/logout");
+    }
+    catch(err){
+      console.log(err);
+    }
     }
   return (
     <header className="header">
@@ -33,7 +38,7 @@ const Header = (props) => {
           {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
 
           {/*change the not equal later  */}
-          {props.Role!='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
+          {props.Role==='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
 
 
 

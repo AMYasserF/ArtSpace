@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ClientHome from './pages/Clienthome';
 import ArtistHome from './pages/ArtistHome';
 import Gallery from './pages/Gallery';
+import AdminDashboard from './components/admin/Dashboard'
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
 import Portfolio from './pages/Portfolio';
@@ -54,6 +55,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery/>} />
         <Route path='/portfolio' element={<Portfolio/>} />
+        <Route path='/admin' element={<AdminDashboard />} />
       </Route>
     )
   );
