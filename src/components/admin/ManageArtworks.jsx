@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import PopupForm from "./PopupFormD";
 import "../../css/manageArtworks.css";
-
+import axios from "axios";
 const ManageArtworks = () => {
   // Example arbitrary data for artworks
-  const artworks = [
-    { id: 1, name: "Starry Night", artist: "Vincent van Gogh" },
-    { id: 2, name: "Mona Lisa", artist: "Leonardo da Vinci" },
-    { id: 3, name: "The Persistence of Memory", artist: "Salvador Dalí" },
-    { id: 4, name: "The Scream", artist: "Edvard Munch" },
-    { id: 5, name: "Girl with a Pearl Earring", artist: "Johannes Vermeer" },
-  ];
+  const [artworks,setArtWorks] = useState([]);
+  useEffect(() => {
+    const fetchArts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/arts");
+        setArtWorks(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("Error fetching user arts", error.response?.data || error.message);
+      }
+    };
 
+    fetchArts();
+  }, []); // Empty dependency array ensures this runs only once on mount
   const [selectedArtwork, setSelectedArtwork] = useState(null); // Tracks the artwork to be deleted
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Tracks the popup state
 
@@ -33,7 +39,7 @@ const ManageArtworks = () => {
       <div className="artwork-list">
         {artworks.map((artwork) => (
           <div key={artwork.id} className="artwork-row">
-            <span>{artwork.name}</span>
+            <span>{artwork.artname}</span>
             <span>{artwork.artist}</span>
             <button onClick={() => handleDeleteClick(artwork)}>Delete</button>
           </div>

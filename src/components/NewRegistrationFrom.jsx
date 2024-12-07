@@ -66,6 +66,11 @@ catch(err){
       <div className="grid-registration-container">
         <div className="registration-header">REGISTER</div>
         <form className="grid-registration-form" onSubmit={handleSubmit}>
+
+        <div className="form-group">
+            <label htmlFor="ProfilePicture">Profile Picture</label>
+            <input type="file" id="profileimage" name="choose a photo"   onChange={(e)=>setName(e.currentTarget.value)} />
+          </div>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <input type="text" id="name" placeholder="Enter your full name" required  onChange={(e)=>setName(e.currentTarget.value)} />
@@ -92,7 +97,7 @@ catch(err){
               type="text"
               id="visa-card"
               placeholder="Enter your Visa card number"
-              required
+              
               onChange={(e)=>setCardNumber(e.currentTarget.value)}
             />
           </div>
