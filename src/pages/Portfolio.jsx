@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PortfolioCard from '../components/Portfolio/PortofolioCard.jsx';
 import ArtPopUp from '../components/gallery/ArtPopUp';
 import AddArtPopup from '../components/Portfolio/AddArtPopup.jsx';
+import RequestAuction from '../components/Portfolio/RequestAuctionPopup.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
@@ -35,9 +36,12 @@ const Portfolio = () => {
     setSelectedArt(art);
   };
 
-  const handleAuctionRequest = (art) => {
-    setRequestAuction(true);
-    
+  const handleAuctionRequest = (art , request) => {
+   
+    console.log(art);
+    console.log(request);
+
+    //  ---> todo backend
   };
 
   const handleDeleteArt=(art)=>{
@@ -112,6 +116,7 @@ const Portfolio = () => {
       </div>
       {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} TheArtist={true}  onSave={handleEditSave}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
+     
       
         
     </div>

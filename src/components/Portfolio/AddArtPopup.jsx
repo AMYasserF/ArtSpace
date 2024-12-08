@@ -21,8 +21,10 @@ const AddArtPopup = ({ onClose, onAdd }) => {
   };
 
   const handleSubmit = () => {
-    if (!artDetails.title || !artDetails.description) {
+    if (!artDetails.title || !artDetails.description || artDetails.image === null) {
       return;
+
+      // add toast here
     }
     console.log(artDetails)
     onAdd(artDetails); 

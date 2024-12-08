@@ -27,40 +27,40 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
     
   return (
     <>
-    <div className="popup">
-        <div className="popup-overlay" onClick={onClose}></div>
-        <div className="popup-content">
-          <button className="close-button" onClick={onClose}>
+    <div className="popup-art">
+        <div className="popup-overlay-art" onClick={onClose}></div>
+        <div className="popup-content-art">
+          <button className="close-button-art" onClick={onClose}>
             ✖
           </button>
-          <div className="popup-left">
-            <img src={post.imageUrl} alt={post.title} className="popup-image" />
+          <div className="popup-left-art">
+            <img src={post.imageUrl} alt={post.title} className="popup-image-art" />
           </div>
-          <div className="popup-right">
+          <div className="popup-right-art">
 
-            {theArtist === false && <div className="popup-creator-info">
+            {theArtist === false && <div className="popup-creator-info-art">
               <img
                 src={post.creator.profilePic}
                 alt={`${post.creator.username}'s profile`}
-                className="popup-profile-pic"
+                className="popup-profile-pic-art"
               />
-              <p className="popup-username">{post.creator.username}</p>
+              <p className="popup-username-art">{post.creator.username}</p>
             </div> 
             }
-            <h2 className="art-title">{post.title}</h2>
-            <p className="art-description"><strong>Description:</strong> {post.description}</p>
-            <p className="base-price"><strong>Base Price:</strong> {post.basePrice}</p>
-            <div className="popup-buttons">
+            <h2 className="art-title-art">{post.title}</h2>
+            <p className="art-description-art"><strong>Description:</strong> {post.description}</p>
+            <p className="base-price-art"><strong>Base Price:</strong> {post.basePrice}</p>
+            <div className="popup-buttons-art">
              {theArtist ===false? 
              <>
-             <button className="buy-now-button">Buy Now</button>
-              <button className="add-review-button" onClick={handleAddReview}>
+             <button className="buy-now-button-art">Buy Now</button>
+              <button className="add-review-button-art" onClick={handleAddReview}>
                 Add Review
               </button>
               </>: 
-              <button className="Edit-art-info" onClick={handleEditArt}>Edit</button>}
+              <button className="Edit-art-info-art" onClick={handleEditArt}>Edit</button>}
             </div>
-          <div className="comment-section">
+          <div className="comment-section-art">
             <h3>Comments</h3>
             <CommentSection comments={post.comments} />
           </div>
