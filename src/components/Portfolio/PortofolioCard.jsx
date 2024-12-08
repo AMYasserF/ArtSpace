@@ -1,19 +1,21 @@
 import React from 'react';
 import { useState } from 'react';
 import '../../css/PortfolioCard.css';
+import RequestAuction from './RequestAuctionPopup';
 
 
 
 
 const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) => 
   {
-    const [requestAuction , setRequestAuction] = useState(false);
+    const [requestAuctionpopup , setRequestAuctionpopup] = useState(false);
     console.log(art);
 
   return (
+    <>
     <div className="portfolio-card" onClick={() => onClick(art)}>
       <button
-        className="delete-button"
+        className="delete-button-portifilio"
         onClick={(e) => {
           e.stopPropagation(); 
           onDelete(art); 
@@ -27,12 +29,14 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) =>
         className="request-auction-button"
         onClick={(e) => {
           e.stopPropagation(); // Prevent triggering the card click event
-          onAuctionRequest(art);
+          setRequestAuctionpopup(true);
         }}
       >
         Request Auction
       </button>
     </div>
+    {requestAuctionpopup && <RequestAuction art={art}  sendRequest = {onAuctionRequest} onClose={()=>{requestAuctionpopup(false)}}/>}
+      </>
   );
 };
 

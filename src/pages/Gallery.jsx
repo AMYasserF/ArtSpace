@@ -3,6 +3,7 @@ import Post from '../components/gallery/Post';
 import Popup from '../components/gallery/ArtPopUp';
 import '../css/Gallery.css';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 
