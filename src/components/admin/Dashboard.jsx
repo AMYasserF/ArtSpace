@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import ManageUsers from './ManageUsers';
 import ManageArtworksPopup from './ManageArtworksPopup.jsx';
 import ManageArtworks from './ManageArtworks.jsx';
@@ -12,7 +13,7 @@ import EditSiteContent from './EditSiteContent';
 import ResetPasswords from './ResetPasswords';
 import '../../css/admin.css';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [activeComponent, setActiveComponent] = useState('manageUsers');
 
   const renderActiveComponent = () => {
@@ -41,8 +42,9 @@ const Dashboard = () => {
         return <ManageUsers />;
     }
   };
-
   return (
+    props.Role!='Admin'||props.Role==null?
+    <Navigate to="/login" />  :
     <div className="admin-dashboard">
       <aside className="sidebar">
         <h2>Admin Dashboard</h2>

@@ -7,11 +7,11 @@ const Post = ({post ,onClick }) => {
       <div className="post-header">
         <img
           className="profile-pic"
-          src={post.creator.profilePic}
-          alt={`${post.creator.username}'s profile`}
+          src={post.profilePic}
+          alt={`${post.artistName}'s profile`}
         />
         <div className="creator-info">
-          <p className="username">{post.creator.username}</p>
+          <p className="username">{post.artistName}</p>
           <p className="title">{post.title}</p>
         </div>
       </div>

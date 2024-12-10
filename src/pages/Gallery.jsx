@@ -1,9 +1,11 @@
 import React from 'react';
 import Post from '../components/gallery/Post';
 import Popup from '../components/gallery/ArtPopUp';
+import axios from 'axios';
 import '../css/Gallery.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Comment from '../components/gallery/Comment';
 
 
 
@@ -13,8 +15,9 @@ const Gallery = () => {
   useEffect(() => {
     const fetchArts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/artist/arts");
+        const response = await axios.get("http://localhost:3000/arts");
         setArts(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
       }
@@ -29,86 +32,21 @@ const Gallery = () => {
   function handlePostClose() {
     setSelectedPost(null);
   }
-    const posts = [
-      {
-        id: 1,
-        creator: {
-          username: 'John Doe',
-          profilePic: './src/assets/testImages/default-profile.jpg',
-        },
-        title: 'Beautiful Landscape',
-        imageUrl: './src/assets/testImages/download.jpg',
-        description: 'A stunning landscape capturing nature’s beauty.',
-        basePrice: '$200',
-        comments: [
-          { 
-            user:{ 
-              name:"ali",
-              profilepic:'./src/assets/testImages/default-profile.jpg'
-            } ,
-              rating: 5, 
-              text: 'Amazing work!' },
-          { 
-            user:{ 
-              name:"ali",
-              profilepic:'./src/assets/testImages/default-profile.jpg'
-            } ,
-            rating: 4, text: 'Really beautiful!' },
-          { user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 5, text: 'Amazing work!' },
-          { user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 2, text: 'over-priced' },
-          { user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 5, text: 'Amazing work!' },
-          { user:{ 
-            name:"ali",
-            profilepic:'./src/assets/testImages/default-profile.jpg'
-          } ,
-          rating: 2, text: 'over-priced' },
-        ],
-      },
-      {
-        id: 2,
-        creator: {
-          username: 'paul shawn',
-          profilePic: './src/assets/testImages/default-profile.jpg',
-        },
-        title: 'Beautiful Landscape',
-        imageUrl: './src/assets/testImages/download (1).jpg',
-        description: 'A piece of art',
-        basePrice: '$150',
-        comments: [
-          { rating: 3, text: 'nice try' },
-          { rating: 1, text: 'bad' },
-        ],
-      },
-      {
-        id: 3,
-        creator: {
-          username: 'John snow',
-          profilePic: './src/assets/testImages/default-profile.jpg',
-        },
-        title: 'Beautiful Landscape',
-        imageUrl: './src/assets/testImages/images.jpg',
-        description: 'A stunning landscape capturing nature’s beauty.',
-        basePrice: '$150',
-        comments: [
-          { rating: 5, text: 'Amazing work!' },
-          { rating: 2, text: 'over-priced' },
-        ],
-      },
-      
-      ];
-      
+    const posts = [];
+      arts.map((art) =>{
+        posts.push({
+          id: art.artid,
+          title: art.artname,
+          imageUrl: art.photo,
+          description: art.description,
+          artistName: art.artistName,
+          artistId: art.artistId,
+          basePrice: art.basePrice,
+          createdAt: art.realeasedate,
+          profilePic: art.artistPic,
+          comments: art.comments
+        });
+      })
   return (
     <div className="gallery">
       {posts.map((post) => (

@@ -40,11 +40,11 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
 
             {theArtist === false && <div className="popup-creator-info-art">
               <img
-                src={post.creator.profilePic}
-                alt={`${post.creator.username}'s profile`}
+                src={post.profilePic}
+                alt={`${post.artistName}'s profile`}
                 className="popup-profile-pic-art"
               />
-              <p className="popup-username-art">{post.creator.username}</p>
+              <p className="popup-username-art">{post.artistName}</p>
             </div> 
             }
             <h2 className="art-title-art">{post.title}</h2>

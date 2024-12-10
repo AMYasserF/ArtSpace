@@ -40,7 +40,7 @@ const ManageArtworks = () => {
         {artworks.map((artwork) => (
           <div key={artwork.id} className="artwork-row">
             <span>{artwork.artname}</span>
-            <span>{artwork.artist}</span>
+            <span>{artwork.artistName}</span>
             <button onClick={() => handleDeleteClick(artwork)}>Delete</button>
           </div>
         ))}

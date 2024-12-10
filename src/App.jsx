@@ -55,7 +55,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery/>} />
         <Route path='/portfolio' element={<Portfolio/>} />
-        <Route path='/admin' element={<AdminDashboard />} />
+        <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
       </Route>
     )
   );

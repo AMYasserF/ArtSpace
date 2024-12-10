@@ -4,6 +4,7 @@ import Comment from './Comment';
 import '../../css/CommentSection.css';
 
 const CommentSection = ({ comments }) => {
+  console.log(comments);
   return (
     <div className="comment-section">
       <ScrollableFeed>

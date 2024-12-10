@@ -56,11 +56,7 @@ const Portfolio = () => {
     formData.append("title", artDetails.title);
     formData.append("description", artDetails.description);
     formData.append("basePrice", artDetails.basePrice || "");
-   
-    
-
     try {
-      
       const response = await axios.post("http://localhost:3000/arts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
