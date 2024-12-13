@@ -15,7 +15,7 @@ const Post = ({post ,onClick }) => {
           <p className="title">{post.title}</p>
         </div>
       </div>
-      <img className="post-image" src={post.imageUrl} alt={post.title} />
+      <img className="post-image" src={post.photo} alt={post.title} />
     </div>
   );
 };

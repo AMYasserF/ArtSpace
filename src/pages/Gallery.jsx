@@ -6,7 +6,8 @@ import '../css/Gallery.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Comment from '../components/gallery/Comment';
-
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Gallery = () => {
@@ -28,7 +29,38 @@ const Gallery = () => {
   function handlePostClick (post){
         setSelectedPost(post);
   }
-
+  function handleAddArtToWishlist(art){
+    try{
+      const response = axios.post("http://localhost:3000/client/addWishlist",{
+        artId:art.id
+      });
+      console.log(response.data);
+      toast.success("Added to wishlist Successfully");
+    }
+      catch(err)
+      {
+        console.log("Error in adding to wishlist");
+        toast.error("Could not be added to wishlist");
+      }
+    }
+  function handleAddComment(comment){
+    console.log(comment);
+    console.log(selectedPost.id);
+    const newComment = {
+      artId: selectedPost.id,
+      comment: comment.description,
+      rate: comment.rate
+    }
+    try{
+      const response = axios.post("http://localhost:3000/client/review",newComment);
+      console.log(response.data);
+      toast.success("Comment added Successfully");
+    }
+    catch(err){
+      console.log("Error in adding comment");
+      toast.error("Could not be added");
+    }
+  }
   function handlePostClose() {
     setSelectedPost(null);
   }
@@ -37,7 +69,7 @@ const Gallery = () => {
         posts.push({
           id: art.artid,
           title: art.artname,
-          imageUrl: art.photo,
+          photo: art.photo,
           description: art.description,
           artistName: art.artistName,
           artistId: art.artistId,
@@ -49,6 +81,7 @@ const Gallery = () => {
       })
   return (
     <div className="gallery">
+      <ToastContainer/>
       {posts.map((post) => (
         <Post 
         key={post.id}

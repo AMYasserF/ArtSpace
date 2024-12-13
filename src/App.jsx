@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Home from "./pages/home";
 import Login from "./pages/Loginpage";
+import Artists from "./pages/Artists";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ClientHome from './pages/Clienthome';
@@ -10,6 +11,8 @@ import AdminDashboard from './components/admin/Dashboard'
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginFrom';
 import Portfolio from './pages/Portfolio';
+import Followings from './pages/following';
+import Settings from './pages/Settings';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
@@ -56,6 +59,9 @@ function App() {
         <Route path='/gallery' element={<Gallery/>} />
         <Route path='/portfolio' element={<Portfolio/>} />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
+        <Route path='/artists' element={<Artists />} />
+        <Route path='/following' element={<Followings />} />
+        <Route path='/Settings' element={<Settings/>} />
       </Route>
     )
   );

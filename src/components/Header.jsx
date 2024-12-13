@@ -30,7 +30,7 @@ const Header = (props) => {
           <NavLink to="/home" className="nav-link">Home</NavLink>
           <NavLink to="/gallery" className="nav-link">Gallery</NavLink>
           <NavLink to="/auctions" className="nav-link">Auctions</NavLink>
-          <NavLink to="/artists" className="nav-link">Artists</NavLink>
+          {props.Role==='Client'?<NavLink to="/artists" className="nav-link">Artists</NavLink>:null}
           <NavLink to="/Exhibitions" className="nav-link">Exhibitions</NavLink>
           <NavLink to="/about" className="nav-link">About</NavLink>
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
@@ -39,8 +39,13 @@ const Header = (props) => {
 
           {/*change the not equal later  */}
           {props.Role==='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
-
-
+          {props.Role==='Client'?<NavLink to="/following" className="nav-link">following</NavLink>:null}
+          {props.Role==='Client'?<NavLink to="/wishlist" className="nav-link">wishlist</NavLink>:null}
+          {props.Role==='Client'?<NavLink to="/Reciepts" className="nav-link">Bought Arts</NavLink>:null}
+          {props.Role==='Artist'?<NavLink to="/Reciepts" className="nav-link">Sold Arts</NavLink>:null}
+          {props.Role==='Artist'?<NavLink to="/followers" className="nav-link">followers</NavLink>:null} 
+          {props.Logged==='true'?<NavLink to="/FeedBack" className="nav-link">Add Feedback</NavLink>:null} 
+          {props.Logged==='true'?<NavLink to="/Settings" className="nav-link">Settings</NavLink>:null}
 
           {props.Logged==='true'?<button className="nav-link" onClick={handleLogout}>Logout</button>:null}
 

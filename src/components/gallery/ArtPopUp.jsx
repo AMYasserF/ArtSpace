@@ -34,7 +34,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
             ✖
           </button>
           <div className="popup-left-art">
-            <img src={post.imageUrl} alt={post.title} className="popup-image-art" />
+            <img src={post.photo} alt={post.title} className="popup-image-art" />
           </div>
           <div className="popup-right-art">
 
