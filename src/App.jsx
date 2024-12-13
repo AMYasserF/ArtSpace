@@ -13,6 +13,7 @@ import LoginForm from './components/LoginFrom';
 import Portfolio from './pages/Portfolio';
 import Followings from './pages/following';
 import Settings from './pages/Settings';
+//import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
@@ -31,19 +32,28 @@ function App() {
   const [role, setRole] = useState(getCookie('Role'));
   const [name, setName] = useState(getCookie('name'));
   const [logged, setLogged] = useState(getCookie('Logged'));
+  const [username , setUsername] = useState(getCookie('Username'));
   useEffect(() => {
     const interval = setInterval(() => {
       const newRole = getCookie('Role');
       const newName = getCookie('name');
       const newLogged = getCookie('Logged');
-      if (newRole !== role) {
+      const newUsername = getCookie('Username');
+
+      if (newRole != role) {
         setRole(newRole);
       }
-      if (newName !== name) {
+      if (newName != name) {
         setName(newName);
       }
-      if (newLogged !== logged) {
+      if (newLogged != logged) {
         setLogged(newLogged);
+      }
+      if (newLogged != logged) {
+        setLogged(newLogged);
+      }
+      if (newUsername != username){
+        setUsername(newUsername);
       }
     }, 1000); // Check for changes every second
 
@@ -57,11 +67,12 @@ function App() {
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery/>} />
-        <Route path='/portfolio' element={<Portfolio/>} />
+        <Route path='/portfolio' element={<Portfolio  viewonly = {false} />} />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
         <Route path='/artists' element={<Artists />} />
         <Route path='/following' element={<Followings />} />
         <Route path='/Settings' element={<Settings/>} />
+        <Route path ='/portfolio/preview/:artistname' element={<Portfolio viewonly={true} />} />
       </Route>
     )
   );

@@ -6,7 +6,7 @@ import ReviewPopUp from './ReviewPopUp';
 import EditArtPopup from '../Portfolio/EditArtPopup';
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
+const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlist}) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
 
@@ -16,17 +16,21 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
 
     const handleEditArt =() => {
         setEditPopupOpen(true);
+        console.log(theArtist);
     }
   
     const handleReviewSubmit = (newReview) => {
       console.log('New Review:', newReview);
       // Update the comments array or pass this data to a backend service
-      post.comments.push(newReview);
+     addcomment(newReview);
     };
 
     
+    
   return (
+    
     <>
+    {console.log(theArtist)}
     <div className="popup-art">
         <div className="popup-overlay-art" onClick={onClose}></div>
         <div className="popup-content-art">
@@ -47,16 +51,20 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave }) => {
               <p className="popup-username-art">{post.artistName}</p>
             </div> 
             }
-            <h2 className="art-title-art">{post.title}</h2>
+            <h2 className="art-title-art">{post.artname}</h2>
             <p className="art-description-art"><strong>Description:</strong> {post.description}</p>
             <p className="base-price-art"><strong>Base Price:</strong> {post.basePrice}</p>
             <div className="popup-buttons-art">
              {theArtist ===false? 
              <>
-             <button className="buy-now-button-art">Buy Now</button>
-              <button className="add-review-button-art" onClick={handleAddReview}>
+            <button className='add-wishlist-button-art' onClick={()=>addtowishlist(post)}>
+              Add to Wishlist
+            </button>
+            
+            <button className="add-review-button-art" onClick={handleAddReview}>
                 Add Review
               </button>
+              <button className="buy-now-button-art">Buy Now</button>
               </>: 
               <button className="Edit-art-info-art" onClick={handleEditArt}>Edit</button>}
             </div>

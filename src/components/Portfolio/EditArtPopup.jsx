@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../css/EditArtPopup.css';
 
 const EditArtPopup = ({ art, onClose, onSave }) => {
-  const [title, setTitle] = useState(art.title);
+  const [title, setTitle] = useState(art.artname);
   const [description, setDescription] = useState(art.description);
   const [basePrice, setBasePrice] = useState(art.basePrice);
 

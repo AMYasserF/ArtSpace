@@ -32,8 +32,6 @@ const Header = (props) => {
           <NavLink to="/auctions" className="nav-link">Auctions</NavLink>
           {props.Role==='Client'?<NavLink to="/artists" className="nav-link">Artists</NavLink>:null}
           <NavLink to="/Exhibitions" className="nav-link">Exhibitions</NavLink>
-          <NavLink to="/about" className="nav-link">About</NavLink>
-          <NavLink to="/contact" className="nav-link">Contact</NavLink>
           {props.Role == null && <NavLink to="/Login" className="nav-link">Login/SignUp</NavLink>}
           {props.Role==='Admin'?<NavLink to="/admin" className="nav-link">Admin</NavLink>:null}
 

@@ -3,11 +3,20 @@
     margin-top: 50px;
   }
   
+
   .portfolio-title {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 40px;
   }
+  
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Adjust as needed */
+  }
+  
   
   .portfolio-grid {
     display: grid;

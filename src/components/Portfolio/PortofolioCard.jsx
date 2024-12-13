@@ -9,7 +9,7 @@ import RequestAuction from './RequestAuctionPopup';
 const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) => 
   {
     const [requestAuctionpopup , setRequestAuctionpopup] = useState(false);
-    console.log(art);
+    
 
   return (
     <>

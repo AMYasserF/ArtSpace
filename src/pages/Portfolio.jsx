@@ -6,32 +6,52 @@ import RequestAuction from '../components/Portfolio/RequestAuctionPopup.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
+import { ColorRing } from 'react-loader-spinner';
+
 import '../css/Portfolio.css';
 
-const Portfolio = () => {
+const Portfolio = ({viewonly , thename }) => {
   const [selectedArt, setSelectedArt] = useState(null);
   const [addArt , setAddArt] = useState(false);
   const [requestAuction , setRequestAuction] = useState(false);
   const [arts, setArts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { artistname } = useParams(); 
+
   useEffect(() => {
+    
     const fetchArts = async () => {
+
+      const requiredName = viewonly ? artistname : thename;
+    
+      
       try {
-        const response = await axios.get("http://localhost:3000/artist/arts");
-        setArts(response.data);
+        setLoading(true);
+        const response = await axios.post("http://localhost:3000/client/arts" ,  {
+          artistname : requiredName
+        });
+        // const response = await axios.get("http://localhost:3000/artist/arts");
+         setArts(response.data);
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
+      }
+      finally{
+        setLoading(false);
       }
     };
 
     fetchArts();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  },  [viewonly, artistname, thename]); // Empty dependency array ensures this runs only once on mount
+ 
   const handleEditSave = (updatedArt) => {
     setArts((prevArts) =>
       prevArts.map((art) => (art.id === updatedArt.id ? updatedArt : art))
     );
   };
-  console.log(arts);
+  
   const handleArtClick = (art) => {
     setSelectedArt(art);
   };
@@ -87,35 +107,82 @@ const Portfolio = () => {
     }
   };
 
+  function handleAddArtToWishlist(art){
+    try{
+      const response = axios.post("http://localhost:3000/client/addWishlist",{
+        artId:art.id
+      });
+      console.log(response.data);
+      toast.success("Added to wishlist Successfully");
+    }
+      catch(err)
+      {
+        console.log("Error in adding to wishlist");
+        toast.error("Could not be added to wishlist");
+      }
+    }
+  function handleAddComment(comment){
+    console.log(comment);
+    console.log(selectedPost.id);
+    const newComment = {
+      artId: selectedPost.id,
+      comment: comment.description,
+      rate: comment.rate
+    }
+    try{
+      const response = axios.post("http://localhost:3000/client/review",newComment);
+      console.log(response.data);
+      toast.success("Comment added Successfully");
+    }
+    catch(err){
+      console.log("Error in adding comment");
+      toast.error("Could not be added");
+    }
+  }
 
   //console.log(arts);
   return (
     <div className="portfolio">
-      <ToastContainer/>
-      <h1 className="portfolio-title">My Portfolio</h1>
+      
+      {viewonly ? <h1 className="portfolio-title">{artistname}'s profile</h1>:<h1 className="portfolio-title">My Portfolio</h1>}
+      {loading ? ( // Show loader while loading
+              <div className="spinner-container">
+                <ColorRing
+                  visible={true}
+                  height={80}
+                  width={80}
+                  ariaLabel="color-ring-loading"
+                  colors={['#83905a' , '#98a724','#868d05','#4b7c01']} 
+                />
+              </div>
+            ) : ( <>
+            <ToastContainer/>
       <div className="portfolio-grid">
         {arts.map((art) => (
           console.log(art),
           <PortfolioCard
-            key={art.id}
+            key={art.artid}
             art={art}
             onClick={handleArtClick}
             onAuctionRequest={handleAuctionRequest}
             onDelete={handleDeleteArt}
+            viewonly={viewonly}
           />
         ))}
-        <button className='Add-art-button' onClick={()=>setAddArt(true)}>
+        { viewonly === false && <button className='Add-art-button' onClick={()=>setAddArt(true)}>
           <span className='add-button-text'>Add New Art</span>
           <br/>
           <FontAwesomeIcon icon={faPalette}  style={{ fontSize: '1.5em', color: '#dfdf82' }} />
-        </button>
+        </button>}
       </div>
-      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} TheArtist={true}  onSave={handleEditSave}/>}
+      {console.log(viewonly)}
+      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addcomment={handleAddComment} addtowhishlist={handleAddArtToWishlist}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
      
-      
+      </>)}
         
     </div>
+    
   );
 };
 
