@@ -1,0 +1,94 @@
+
+.user-wishlsit-page {
+    padding: 20px;
+    background-color: #f9f9f9; 
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Heading styling */
+  .h2-wishlist-page {
+    font-size: 24px;
+    color: #4b7c01; 
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Wishlist table container */
+  .wishlist-table {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    margin: 0 auto;
+    max-width: 800px; 
+  }
+  
+  /* Individual art card */
+  .wishlist-card {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding: 15px;
+    background-color: #ffffff; 
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s, box-shadow 0.2s; 
+    cursor: pointer;
+  }
+  
+  .wishlist-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Art image */
+  .wishlist-art-pic {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; 
+    border-radius: 8px; 
+  }
+  
+  /* Art information */
+  .wishlist-art-info {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .wishlist-preview-art-name {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .wishlist-preview-artist-name {
+    font-size: 14px;
+    color: #666; 
+    margin: 5px 0 0;
+  }
+  
+  .wishlist-preview-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4b7c01; 
+    margin: 5px 0 0;
+  }
+  
+  /* Remove button */
+  .remove-button-wishlist {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff; 
+    background-color: #7b2c30; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .remove-button-wishlist:hover {
+    background-color: #d72638;
+  }
+  

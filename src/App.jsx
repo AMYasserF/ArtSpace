@@ -14,6 +14,9 @@ import Portfolio from './pages/Portfolio';
 import Followings from './pages/following';
 import Settings from './pages/Settings';
 import FeedBack from './pages/FeedBack';
+import Reciepts from './pages/receipts';
+import Wishlist from './pages/wishlist';
+//import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
@@ -64,6 +67,9 @@ function App() {
         <Route path='/following' element={<Followings />} />
         <Route path='/Settings' element={<Settings/>} />
         <Route path='/Feedback' element={<FeedBack/>} />
+        <Route path ='/portfolio/preview/:artistname' element={<Portfolio viewonly={true} />} />
+        <Route path='/Purchase-history' element={<Reciepts/>}/>
+        <Route path='/wishlist' element={<Wishlist/>}/>
       </Route>
     )
   );

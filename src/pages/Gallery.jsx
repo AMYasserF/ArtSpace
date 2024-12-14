@@ -14,6 +14,8 @@ const Gallery = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
     const fetchArts = async () => {
       try {
@@ -33,13 +35,16 @@ const Gallery = () => {
   function handlePostClick (post){
         setSelectedPost(post);
   }
- async function handleAddArtToWishlist(art){
+
+  async function handleAddArtToWishlist(art){
+    console.log(art);
     try{
       const response = await axios.post("http://localhost:3000/client/addWishlist",{
-        artId:art.id
+        artId:art.artid
       });
       console.log(response.data);
       toast.success("Added to wishlist Successfully");
+      art.inwhishlist = true;
     }
       catch(err)
       {
@@ -47,12 +52,32 @@ const Gallery = () => {
         toast.error("Could not be added to wishlist");
       }
     }
+   
+   async function handleRemovefromWishlsit (art)  {
+      console.log("art removed from wishlist:" + art.artname);
+
+      try{
+          const response = await axios.delete("http://localhost:3000/client/removeWishlist",{
+              artId : art.artid
+          });
+          console.log(response.data);
+          toast.success("Removed from wishlist");
+          
+        }
+        catch(err){
+          console.log("Error in removing from wishlist");
+          toast.error("Error Removing form Wishlist");
+        }
+      }
+
+      
+
+
   async function handleAddComment(review){
-    //console.log('Comment is:'+review);
     console.log(review);
-    console.log(selectedPost.id);
+    console.log(selectedPost.artid);
     const newComment = {
-      artId: selectedPost.id,
+      artId: selectedPost.artid,
       comment: review.comment,
       rate: review.rating
     }
@@ -60,12 +85,21 @@ const Gallery = () => {
     try{
       const response = await axios.post("http://localhost:3000/client/review",newComment);
       console.log(response.data);
+      selectedPost.comments.push(comment);
       toast.success("Comment added Successfully");
+      
     }
     catch(err){
       console.log("Error in adding comment");
       toast.error("Could not be added");
     }
+  }
+
+  const handleBuy =(art) =>{
+    console.log("buy request invoked");
+    console.log(art);
+
+    // handle back
   }
   function handlePostClose() {
     setSelectedPost(null);
@@ -73,8 +107,8 @@ const Gallery = () => {
     const posts = [];
       arts.map((art) =>{
         posts.push({
-          id: art.artid,
-          title: art.artname,
+          artid: art.artid,
+          artname: art.artname,
           photo: art.photo,
           description: art.description,
           artistName: art.artistName,
@@ -82,7 +116,8 @@ const Gallery = () => {
           basePrice: art.basePrice,
           createdAt: art.realeasedate,
           profilePic: art.artistPic,
-          comments: art.comments
+          comments: art.comments,
+          inwishlist: false
         });
       })
   return (
@@ -101,12 +136,20 @@ const Gallery = () => {
       <ToastContainer/>
       {posts.map((post) => (
         <Post 
-        key={post.id}
+        key={post.artid}
         post={post} 
         onClick={()=>handlePostClick(post)} 
          />
       ))}
-      {selectedPost && <Popup post={selectedPost} onClose={() => handlePostClose()} theArtist={false}  addcomment={handleAddComment} addtowhishlist={handleAddArtToWishlist}/>}
+      {selectedPost && <Popup 
+         post={selectedPost} 
+         onClose={() => handlePostClose()} 
+         theArtist={false}  
+         addcomment={handleAddComment} 
+         addtowishlist={handleAddArtToWishlist}  
+         removewishlist={handleRemovefromWishlsit} 
+         inWishlist={selectedPost.inwishlist}
+         buyrequest={handleBuy}/>}
         </>)}
         </div>
   

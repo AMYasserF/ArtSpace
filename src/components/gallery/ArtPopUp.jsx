@@ -6,7 +6,7 @@ import ReviewPopUp from './ReviewPopUp';
 import EditArtPopup from '../Portfolio/EditArtPopup';
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlist}) => {
+const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
 
@@ -16,7 +16,6 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
 
     const handleEditArt =() => {
         setEditPopupOpen(true);
-        console.log(theArtist);
     }
   
     const handleReviewSubmit = (newReview) => {
@@ -27,12 +26,32 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
      addcomment({comment,rating});
     };
 
+    async function handleaddtowhishlist(post){
+      console.log('added to wishlist')
+      console.log(post);
+      await addtowishlist(post);
+      onClose();
+    }
     
+    const HandleRemovewishlist =(post)=>{
+      console.log('removed from wishlist')
+     
+      removewishlist(post);
+      onClose();
+    }
     
-  return (
-    
+    // to do --> handle the buy 
+
+    const HandleBuyRequest =(post)=>{
+      console.log('buy request for : ' + post.artname);
+      buyrequest(post);
+      onClose();
+      
+    }
+
+  return (  
     <>
-    {console.log(theArtist)}
+    { console.log(post)}
     <div className="popup-art">
         <div className="popup-overlay-art" onClick={onClose}></div>
         <div className="popup-content-art">
@@ -40,7 +59,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
             ✖
           </button>
           <div className="popup-left-art">
-            <img src={post.photo} alt={post.title} className="popup-image-art" />
+            <img src={post.photo} alt={post.artname} className="popup-image-art" />
           </div>
           <div className="popup-right-art">
 
@@ -56,20 +75,32 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
             <h2 className="art-title-art">{post.artname}</h2>
             <p className="art-description-art"><strong>Description:</strong> {post.description}</p>
             <p className="base-price-art"><strong>Base Price:</strong> {post.basePrice}</p>
-            <div className="popup-buttons-art">
-             {theArtist ===false? 
-             <>
-            <button className='add-wishlist-button-art' onClick={()=>addtowishlist(post)}>
-              Add to Wishlist
-            </button>
+             
+            {theArtist === false ? 
+  <>
+    <div className="popup-buttons-art">
+      {inWishlist === false ? 
+        <button className="add-wishlist-button-art" onClick={()=>{addtowishlist(post)}}>
+          Add to Wishlist
+        </button>
+       : 
+        <button className="add-wishlist-button-art" onClick={HandleRemovewishlist}>
+          Remove from Wishlist
+        </button>
+      }
+      <button className="add-review-button-art" onClick={handleAddReview}>
+        Add Review
+      </button>
+    </div>
+    <button className="buy-now-button-art" onClick={HandleBuyRequest}>Buy Now</button>
+  </>
+ : 
+  <button className="Edit-art-info-art" onClick={handleEditArt}>
+    Edit
+  </button>
+}
+
             
-            <button className="add-review-button-art" onClick={handleAddReview}>
-                Add Review
-              </button>
-              <button className="buy-now-button-art">Buy Now</button>
-              </>: 
-              <button className="Edit-art-info-art" onClick={handleEditArt}>Edit</button>}
-            </div>
           <div className="comment-section-art">
             <h3>Comments</h3>
             <CommentSection comments={post.comments} />
