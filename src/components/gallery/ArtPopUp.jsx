@@ -19,17 +19,11 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
     }
   
     const handleReviewSubmit = (newReview) => {
-<<<<<<< HEAD
-    console.log('New Review:', newReview);
-     addcomment(newReview);
-     
-=======
       console.log('New Review:', newReview);
       // Update the comments array or pass this data to a backend service
       const comment=newReview.comment;
       const rating=newReview.rating;
      addcomment({comment,rating});
->>>>>>> 9503a42f01c64ae4c645b2b283570b22d60a01e3
     };
 
     async function handleaddtowhishlist(post){

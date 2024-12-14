@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import ReceiptDetailsPopup from '../components/receipt/ReceiptDetailsPopup';
 import { ColorRing } from 'react-loader-spinner';
 import '../css/wishlist.css';
-import { ColorRing } from 'react-loader-spinner';
+
 import ArtPopUp from '../components/gallery/ArtPopUp';
 
 const Wishlist = () => {
@@ -22,7 +22,7 @@ const Wishlist = () => {
           setWishlist(response.data);
           console.log(response.data);
         } catch (error) {
-          console.log("Error fetching receipts", error.response?.data || error.message);
+          console.log("Error fetching wishlists", error.response?.data || error.message);
         }
         finally{
           setLoading(false);
@@ -105,8 +105,8 @@ const Wishlist = () => {
  
       return (
         <>
-        <div className='wishlist-card' key={art.artid} onClick={setSelectedArt(art)} > 
-        <img className='wishlist-art-pic' src={art.artpic} />
+        <div className='wishlist-card' key={art.artid} onClick={()=>{setSelectedArt(art)}} > 
+        <img className='wishlist-art-pic' src={art.photo} />
 
         <div className='wishlist-art-info'>
         <h3 className='wishlist-preview-art-name' >  {art.artname}    </h3>
@@ -119,7 +119,7 @@ const Wishlist = () => {
         
         </div>
         {selectedArt && <ArtPopUp 
-                post={selectedPost} 
+                post={selectedArt} 
                 onClose={() => setSelectedArt(false)} 
                 theArtist={false}  
                 addcomment={handleAddComment}  

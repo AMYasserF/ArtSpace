@@ -73,13 +73,13 @@ const Gallery = () => {
       
 
 
-  async function handleAddComment(comment){
-    console.log(comment);
-    console.log(selectedPost.id);
+  async function handleAddComment(review){
+    console.log(review);
+    console.log(selectedPost.artid);
     const newComment = {
       artId: selectedPost.artid,
-      comment: comment.description,
-      rate: comment.rate
+      comment: review.comment,
+      rate: review.rating
     }
     console.log('Comment is:',newComment);
     try{

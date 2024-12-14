@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/ArtPopUp.css';
+import '../../css/ReceiptDetailsPopup.css'
 
 const ReceiptDetailsPopup = ({ receipt, onClose }) => {
   return (

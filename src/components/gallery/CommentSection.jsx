@@ -9,7 +9,7 @@ const CommentSection = ({ comments }) => {
     <div className="comment-section">
       <ScrollableFeed>
         {comments.map((comment, index) => (
-          <Comment key={index} profilepic= {comment.clientprofilepic} name = {comment.clientname} rating={comment.rating} text={comment.comments} />
+          <Comment key={index} profilepic= {comment.clientprofilepic} name = {comment.clientname} rating={comment.rate} text={comment.comments} />
         ))}
       </ScrollableFeed>
     </div>
