@@ -81,6 +81,7 @@ const Gallery = () => {
       comment: comment.description,
       rate: comment.rate
     }
+    console.log('Comment is:',newComment);
     try{
       const response = await axios.post("http://localhost:3000/client/review",newComment);
       console.log(response.data);

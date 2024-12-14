@@ -11,7 +11,9 @@ import MonitorActivity from './MonitorActivity';
 import ApproveArtists from './ApproveArtists';
 import EditSiteContent from './EditSiteContent';
 import ResetPasswords from './ResetPasswords';
+import ManageBlockedUsers from './ManageBlockedUsers';
 import '../../css/admin.css';
+import ManageBannedArtworks from './ManageBannedArtworks.jsx';
 
 const Dashboard = (props) => {
   const [activeComponent, setActiveComponent] = useState('manageUsers');
@@ -22,7 +24,9 @@ const Dashboard = (props) => {
         return <ManageUsers />;
       case 'manageArtworks':
         return <ManageArtworks />;
-      case 'auctions':
+        case 'BlockedUsers':
+        return <ManageBlockedUsers />;
+        case 'auctions':
         return <Auctions />;
       case 'exhibitions':
         return <Exhibitions />;
@@ -38,6 +42,8 @@ const Dashboard = (props) => {
         return <EditSiteContent />;
       case 'resetPasswords':
         return <ResetPasswords />;
+      case 'BannedArtworks':
+        return <ManageBannedArtworks />;
       default:
         return <ManageUsers />;
     }
@@ -52,12 +58,13 @@ const Dashboard = (props) => {
           <ul>
             <li onClick={() => setActiveComponent('manageUsers')}>Manage Users</li>
             <li onClick={() => setActiveComponent('manageArtworks')}>Manage Artworks</li>
+            <li onClick={() => setActiveComponent('BlockedUsers')}>Manage Blocked Users</li>
+            <li onClick={() => setActiveComponent('BannedArtworks')}>Manage Deleted Arts</li>
             <li onClick={() => setActiveComponent('auctions')}>Approve Auctions</li>
             <li onClick={() => setActiveComponent('exhibitions')}>Edit Exhibitions</li>
             <li onClick={() => setActiveComponent('feedbackModeration')}>Moderate Feedback</li>
             <li onClick={() => setActiveComponent('reports')}>Generate Reports</li>
             <li onClick={() => setActiveComponent('monitorActivity')}>Monitor Platform Activity</li>
-            <li onClick={() => setActiveComponent('approveArtists')}>Approve Artists</li>
             <li onClick={() => setActiveComponent('editSiteContent')}>Edit Site Content</li>
             <li onClick={() => setActiveComponent('resetPasswords')}>Reset Passwords</li>
           </ul>

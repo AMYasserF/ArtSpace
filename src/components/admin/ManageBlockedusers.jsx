@@ -4,17 +4,16 @@ import "../../css/manageUsers.css";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-const ManageUsers = () => {
+const ManageBlockedUsers = () => {
   // Example arbitrary data for users
   const [users,setUsers] = useState([]);
 
   const [selectedUser, setSelectedUser] = useState(null); // Tracks the user to be blocked
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Tracks the popup state
-  const [reason, setReason] = useState(''); // Tracks the reason for blocking the user
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/Admin/Users");
+        const response = await axios.get("http://localhost:3000/Admin/ban/User");
         setUsers(response.data);
         console.log(response.data);
       } catch (error) {
@@ -25,24 +24,20 @@ const ManageUsers = () => {
     fetchUsers();
   }, []); // Empty dependency array ensures this runs only once on mount
   // Opens the popup form for the selected user
-  const handleBlockClick = (user) => {
+  const handleUnBlockClick = (user) => {
     try{
       console.log(user.userid);
-      const resp=axios.post("http://localhost:3000/Admin/ban/user",{
-        userID:user.userid,
-        reason:reason
+      const resp=axios.post("http://localhost:3000/Admin/unban/user",{
+        username:user.username,
       });
-      toast.success("User has been blocked successfully");
+      toast.success("User has been unblocked successfully");
     }
     catch(err){
-      toast.error("Error blocking user");
+      toast.error("Error unblocking user");
       console.log(err);
     }
   };
-  const handleMakeAdmin = (user) => {
-  };
-  const handleChangeRoleToClient = (user) => {
-  };
+
   // Closes the popup form
   const handleClosePopup = () => {
     setSelectedUser(null);
@@ -58,9 +53,7 @@ const ManageUsers = () => {
           <div key={user.id} className="user-row">
             <span>{user.name}</span>
             <span>{user.role}</span>
-            {user.role === 'Admin' ?<button onClick={()=>handleChangeRoleToClient(user)}>UnAdmin</button> :<button onClick={() => handleMakeAdmin(user)}>Block</button>}
-            <input type="text" onChange={(e) => setReason(e.target.value)}/>
-            <button onClick={() => handleBlockClick(user)}>Block</button>
+            <button onClick={() => handleUnBlockClick(user)}>UnBlock</button>
           </div>
         ))}
       </div>
@@ -71,4 +64,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default ManageBlockedUsers;
