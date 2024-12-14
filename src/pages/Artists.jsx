@@ -8,6 +8,7 @@ import { ColorRing } from 'react-loader-spinner';
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
+  const [followings, setFollowings] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -16,8 +17,11 @@ const Artists = () => {
       try {
         setLoading(true); // Start loading
         const response = await axios.get('http://localhost:3000/client/getArtists');
+        const response2 = await axios.get('http://localhost:3000/client/getFollowings');
+        setFollowings(response2.data);
         setArtists(response.data);
         console.log(response.data);
+        console.log(response2.data);
       } catch (error) {
         console.log('Error fetching user arts', error.response?.data || error.message);
         toast.error('Failed to load artists');
@@ -46,7 +50,20 @@ const Artists = () => {
       toast.error('Follower could not be added');
     }
   };
-
+  const handleUnFollow = async (artist) => {
+    followings.filter((artistt) => artistt.userid !== artist.userid);
+    console.log(`Add follow request: ${artist.username}`);
+    try {
+      const response = await axios.post('http://localhost:3000/client/removeFollower', {
+        artistId: artist.userid,
+      });
+      console.log(response.data);
+      toast.success('Follower removed successfully');
+    } catch (err) {
+      console.log('Error in adding follow');
+      toast.error('Follower could not be removed');
+    }
+  };
   return (
     <div className="allartistspage">
       <ToastContainer/>
@@ -74,9 +91,9 @@ const Artists = () => {
               </div>
 
               <div className="artists-preview-buttons">
-                {<button className="follow-artist" onClick={() => handleAddFollow(artist)}>
+                {!followings.find((artistt) => artistt.userid === artist.userid)? <button className="follow-artist" onClick={() => handleAddFollow(artist)}>
                   Follow
-                </button>}
+                </button>:<button className="follow-artist" onClick={() => handleUnFollow(artist)}>Unfollow</button>}
                 <button className="view-artist-profile" onClick={() => handleViewPortfolio(artist.username)}>
                   View Profile
                 </button>
