@@ -33,9 +33,9 @@ const Gallery = () => {
   function handlePostClick (post){
         setSelectedPost(post);
   }
-  function handleAddArtToWishlist(art){
+ async function handleAddArtToWishlist(art){
     try{
-      const response = axios.post("http://localhost:3000/client/addWishlist",{
+      const response = await axios.post("http://localhost:3000/client/addWishlist",{
         artId:art.id
       });
       console.log(response.data);
@@ -47,16 +47,18 @@ const Gallery = () => {
         toast.error("Could not be added to wishlist");
       }
     }
-  function handleAddComment(comment){
-    console.log(comment);
+  async function handleAddComment(review){
+    //console.log('Comment is:'+review);
+    console.log(review);
     console.log(selectedPost.id);
     const newComment = {
       artId: selectedPost.id,
-      comment: comment.description,
-      rate: comment.rate
+      comment: review.comment,
+      rate: review.rating
     }
+    console.log('Comment is:',newComment);
     try{
-      const response = axios.post("http://localhost:3000/client/review",newComment);
+      const response = await axios.post("http://localhost:3000/client/review",newComment);
       console.log(response.data);
       toast.success("Comment added Successfully");
     }

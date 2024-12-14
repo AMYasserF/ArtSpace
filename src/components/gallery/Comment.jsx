@@ -2,14 +2,14 @@ import React from 'react';
 import Stars from 'react-rating-stars-component';
 import '../../css/Comment.css';
 
-const Comment = ({ user,rating, text }) => {
+const Comment = ({ profilepic,name,rating, text }) => {
   return (
     <div className="comment">
         <div className='commenter'>
             <img className='commenter-pic' 
-             src={user.profilepic}>
+             src={profilepic}>
              </img>
-             <p className='commenter-name'>{user.name}</p>
+             <p className='commenter-name'>{name}</p>
         </div>
       <Stars
         count={5}

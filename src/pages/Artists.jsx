@@ -37,7 +37,7 @@ const Artists = () => {
     console.log(`Add follow request: ${artist.username}`);
     try {
       const response = await axios.post('http://localhost:3000/client/addFollower', {
-        artistId: artist.id,
+        artistId: artist.userid,
       });
       console.log(response.data);
       toast.success('Follower added successfully');
@@ -49,6 +49,7 @@ const Artists = () => {
 
   return (
     <div className="allartistspage">
+      <ToastContainer/>
       <h2 className="h2-artists-page">Available Artists</h2>
 
       {loading ? ( // Show loader while loading
@@ -73,9 +74,9 @@ const Artists = () => {
               </div>
 
               <div className="artists-preview-buttons">
-                <button className="follow-artist" onClick={() => handleAddFollow(artist)}>
+                {<button className="follow-artist" onClick={() => handleAddFollow(artist)}>
                   Follow
-                </button>
+                </button>}
                 <button className="view-artist-profile" onClick={() => handleViewPortfolio(artist.username)}>
                   View Profile
                 </button>

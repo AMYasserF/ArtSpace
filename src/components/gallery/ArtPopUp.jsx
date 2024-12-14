@@ -22,7 +22,9 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
     const handleReviewSubmit = (newReview) => {
       console.log('New Review:', newReview);
       // Update the comments array or pass this data to a backend service
-     addcomment(newReview);
+      const comment=newReview.comment;
+      const rating=newReview.rating;
+     addcomment({comment,rating});
     };
 
     
@@ -76,6 +78,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
       </div>
     </div>
     {isReviewPopupOpen && (
+      console.log("Review Popup Open"),
         <ReviewPopUp
           onClose={() => setReviewPopupOpen(false)}
           onSubmit={handleReviewSubmit}
