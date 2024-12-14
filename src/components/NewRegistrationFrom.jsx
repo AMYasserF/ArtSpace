@@ -25,24 +25,30 @@ const GridRegistrationForm = ({ onBack }) => {
   const [Expiry,setExpiry]=useState("");
   const [Phone,setPhone]=useState("");
   const [reg,setReg]=useState(false);
-
+  const [img,setImg]=useState(null);
 
 async function handleSubmit(e){
     e.preventDefault();
-    try{
-  const resp=await axios.post(`${apiUrl}/register`,{
-  name:name,
-  email:Email,
-  password:Pass,
-  role:Role,
-  username:Username,
-  gender:Gender,
-  address:Address,
-  age:Age,
-  cardNumber:CardNumber,
-  cardExpiry:Expiry,
-  phoneNumber:Phone,
-})
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', Email);
+    formData.append('password', Pass);
+    formData.append('role', Role);
+    formData.append('username', Username);
+    formData.append('gender', Gender);
+    formData.append('address', Address);
+    formData.append('age', Age);
+    formData.append('cardNumber', CardNumber);
+    formData.append('cardExpiry', Expiry);
+    formData.append('phoneNumber', Phone);
+    formData.append('image', img); // Append the file here
+    console.log(formData);
+    try{  
+      const resp = await axios.post(`${apiUrl}/register`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
 console.log(resp);
 setReg(true);
@@ -69,7 +75,7 @@ catch(err){
 
         <div className="form-group">
             <label htmlFor="ProfilePicture">Profile Picture</label>
-            <input type="file" id="profileimage" name="choose a photo"   onChange={(e)=>setName(e.currentTarget.value)} />
+            <input type="file" id="profileimage" name="choose a photo" accept="image/*"  onChange={(e)=>setImg(e.target.files[0])} />
           </div>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
