@@ -87,38 +87,56 @@
 
   .popup-buttons-art {
     display: flex;
-    justify-content: space-between;
-    margin: 15px 0;
+    justify-content: space-between; 
+    gap: 10px; 
+    margin-bottom: 15px; 
   }
   
-  .buy-now-button-art,
+  .add-wishlist-button-art,
   .add-review-button-art {
-    flex: 1;
-    padding: 10px;
-    margin: 0 5px;
-    font-size: 1rem;
+    flex: 1; /* Make buttons equal width */
+    padding: 8px 12px;
+    font-size: 14px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .buy-now-button-art {
-    background-color: #4caf50;
     color: white;
+    cursor: pointer;
   }
   
-  .buy-now-button-art:hover {
-    background-color: #45a049;
+  
+  .add-wishlist-button-art {
+    background-color: #bf5700; 
   }
+  
+  .add-wishlist-button-art:hover {
+    background-color: #ffbf00; 
+  }
+  
   
   .add-review-button-art {
-    background-color: #007bff;
-    color: white;
+    background-color: #7b2c30; /* Deep Wine Red */
   }
   
   .add-review-button-art:hover {
-    background-color: #0056b3;
+    background-color: #d72638; /* Crimson Red */
+  }
+  
+  /* Buy Now Button */
+  .buy-now-button-art {
+    display: block; 
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #556b2f; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .buy-now-button-art:hover {
+    background-color: #50c878; 
   }
   
   
