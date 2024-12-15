@@ -6,7 +6,7 @@ import ReviewPopUp from './ReviewPopUp';
 import EditArtPopup from '../Portfolio/EditArtPopup';
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave, addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
+const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
     
@@ -21,8 +21,6 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addtowishlist ,removewis
 
    
     
-
-  
     const handleReviewSubmit = (newReview) => {
       console.log('New Review:', newReview);
       // Update the comments array or pass this data to a backend service
@@ -32,13 +30,6 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addtowishlist ,removewis
     };
 
     
-    
-    const HandleRemovewishlist =(post)=>{
-      console.log('removed from wishlist')
-     
-      removewishlist(post);
-      onClose();
-    }
     
     // to do --> handle the buy 
 
