@@ -1,0 +1,88 @@
+.feedback-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-container h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .feedback-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feedback-container input[type="text"],
+  .feedback-container input[type="email"],
+  .feedback-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .feedback-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .feedback-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .star.selected {
+    color: #ff0;
+  }
+  
+  .existing-feedback {
+    padding: 80px 20px;
+  }
+  
+  .feedback-item {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .feedback-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .feedback-actions button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .feedback-actions button:hover {
+    background-color: #0056b3;
+  }

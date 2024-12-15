@@ -40,10 +40,10 @@ const FollowList = () => {
         artistId: artist.userid,
       });
       console.log(response.data);
-      toast.success('Follower added successfully');
+      toast.success('Follower removed successfully');
     } catch (err) {
       console.log('Error in adding follow');
-      toast.error('Follower could not be added');
+      toast.error('Follower could not be removed');
     }
   };
 
