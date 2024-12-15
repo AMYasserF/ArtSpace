@@ -121,25 +121,28 @@ const Portfolio = ({viewonly , thename }) => {
         toast.error("Could not be added to wishlist");
       }
     }
-  function handleAddComment(comment){
-    console.log(comment);
-    console.log(selectedPost.id);
-    const newComment = {
-      artId: selectedPost.id,
-      comment: comment.description,
-      rate: comment.rate
+    
+    async function handleAddComment(review){
+      console.log(review);
+      console.log(selectedArt.artid);
+      const newComment = {
+        artId: selectedArt.artid,
+        comment: review.comment,
+        rate: review.rating
+      }
+      console.log('Comment is:',newComment);
+      try{
+        const response = await axios.post("http://localhost:3000/client/review",newComment);
+        console.log(response.data);
+        selectedPost.comments.push(comment);
+        toast.success("Comment added Successfully");
+        
+      }
+      catch(err){
+        console.log("Error in adding comment");
+        toast.error("Could not be added");
+      }
     }
-    try{
-      const response = axios.post("http://localhost:3000/client/review",newComment);
-      console.log(response.data);
-      toast.success("Comment added Successfully");
-    }
-    catch(err){
-      console.log("Error in adding comment");
-      toast.error("Could not be added");
-    }
-  }
-
   //console.log(arts);
   return (
     <div className="portfolio">

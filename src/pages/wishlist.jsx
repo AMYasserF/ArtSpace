@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import ReceiptDetailsPopup from '../components/receipt/ReceiptDetailsPopup';
 import { ColorRing } from 'react-loader-spinner';
+import { ToastContainer,toast } from 'react-toastify';
 import '../css/wishlist.css';
 
 import ArtPopUp from '../components/gallery/ArtPopUp';
@@ -35,39 +35,39 @@ const Wishlist = () => {
     
 
 
-
-
-    function handleAddComment(comment){
-        console.log(comment);
-        console.log(selectedPost.id);
-        const newComment = {
-          artId: selectedPost.id,
-          comment: comment.description,
-          rate: comment.rate
-        }
-        try{
-          const response = axios.post("http://localhost:3000/client/review",newComment);
-          console.log(response.data);
-          selectedPost.comments.push(comment);
-          toast.success("Comment added Successfully");
-          
-        }
-        catch(err){
-          console.log("Error in adding comment");
-          toast.error("Could not be added");
-        }
+    async function handleAddComment(review){
+      console.log(review);
+      console.log(selectedArt.artid);
+      const newComment = {
+        artId: selectedArt.artid,
+        comment: review.comment,
+        rate: review.rating
       }
+      console.log('Comment is:',newComment);
+      try{
+        const response = await axios.post("http://localhost:3000/client/review",newComment);
+        console.log(response.data);
+        selectedPost.comments.push(comment);
+        toast.success("Comment added Successfully");
+        
+      }
+      catch(err){
+        console.log("Error in adding comment");
+        toast.error("Could not be added");
+      }
+    }
 
-      const handleRemovefromWishlsit = (art) => {
+      async function handleRemovefromWishlsit (art) {
         console.log("art removed from wishlist:" + art.artname);
 
         try{
-            const response = axios.delete("http://localhost:3000/client/removeWishlist",{
-                artId : art.artid
+            const response = await axios.delete("http://localhost:3000/client/RemoveWishlist",{
+              params: { artId: art.artid }
             });
             console.log(response.data);
+            window.location.reload();
             toast.success("Removed from wishlist");
-            
+           
           }
           catch(err){
             console.log("Error in removing from wishlist");
@@ -100,22 +100,24 @@ const Wishlist = () => {
                   </div>
                 ) : ( <>
     <div className='wishlist-table'>
-      
+    
      { wishlist.map((art) => { 
- 
+        
       return (
         <>
+        <ToastContainer/>
         <div className='wishlist-card' key={art.artid} onClick={()=>{setSelectedArt(art)}} > 
         <img className='wishlist-art-pic' src={art.photo} />
-
         <div className='wishlist-art-info'>
-        <h3 className='wishlist-preview-art-name' >  {art.artname}    </h3>
-        <p className='wishlist-preview-artist-name'> {art.artistname} </p>
-        <p className='wishlist-preview-price'> price:{art.baseprice}      </p>
+        <h3  className='wishlist-preview-art-name' >    {art.artname}     </h3>
+        <p   className='wishlist-preview-artist-name'>  {art.artistname}  </p>
+        <p   className='wishlist-preview-price'> price: {art.baseprice}   </p>
         </div>
         
       
-        <button className='remove-button-wishlist' onClick={()=>handleRemovefromWishlsit(art)}>Remove From wishlist</button>
+        <button className='remove-button-wishlist' onClick={(e)=>{
+          e.stopPropagation();
+          handleRemovefromWishlsit(art)}}>Remove From wishlist</button>
         
         </div>
         {selectedArt && <ArtPopUp 

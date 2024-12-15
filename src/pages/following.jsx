@@ -6,27 +6,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../css/artists.css';
 import { ColorRing } from 'react-loader-spinner'; 
 
-const Artists = () => {
-  const [artists, setArtists] = useState([]);
+const FollowList = () => {
+  const [Follows, setFollows] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchArtists = async () => {
+    const fetchFollow = async () => {
       try {
         setLoading(true); // Start loading
         const response = await axios.get('http://localhost:3000/client/getFollowings');
-        setArtists(response.data);
+        setFollows(response.data);
         console.log(response.data);
       } catch (error) {
         console.log('Error fetching user arts', error.response?.data || error.message);
-        toast.error('Failed to load artists');
+        toast.error('Failed to load followings');
       } finally {
         setLoading(false); // Stop loading
       }
     };
 
-    fetchArtists();
+    fetchFollow();
   }, []); // Empty dependency array ensures this runs only once on mount
 
   const handleViewPortfolio = (artistName) => {
@@ -89,4 +89,4 @@ const Artists = () => {
   );
 };
 
-export default Artists;
+export default FollowList;

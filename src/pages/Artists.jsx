@@ -9,6 +9,7 @@ import { ColorRing } from 'react-loader-spinner';
 const Artists = () => {
   const [artists, setArtists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [Following , setFollowing] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,38 @@ const Artists = () => {
     fetchArtists();
   }, []); // Empty dependency array ensures this runs only once on mount
 
+  
+
+  useEffect(() => {
+    const fetchFollow = async () => {
+      try {
+        setLoading(true); // Start loading
+        const response = await axios.get('http://localhost:3000/client/getFollowings');
+        setFollowing(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log('Error fetching user arts', error.response?.data || error.message);
+        toast.error('Failed to load followings');
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchFollow();
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  useEffect(()=>{
+  const setIsFollow = () =>{ 
+    return artists.map(artist => ({
+      ...artist,
+      isFollowed: following.some(follow => follow.userid === artist.userid) // Check if artist.id exists in following
+    }));
+  
+  }
+
+  setIsFollow();
+  } , [Following])
+
   const handleViewPortfolio = (artistName) => {
     navigate(`/portfolio/preview/${artistName}`);
   };
@@ -37,6 +70,21 @@ const Artists = () => {
     console.log(`Add follow request: ${artist.username}`);
     try {
       const response = await axios.post('http://localhost:3000/client/addFollower', {
+        artistId: artist.userid,
+      });
+      console.log(response.data);
+      setFollowing([...Following , artist]);
+      toast.success('Follower added successfully');
+    } catch (err) {
+      console.log('Error in adding follow');
+      toast.error('Follower could not be added');
+    }
+  };
+
+  const handleUnFollow = async (artist) => {
+    console.log(`Add follow request: ${artist.username}`);
+    try {
+      const response = await axios.post('http://localhost:3000/client/removeFollower', {
         artistId: artist.userid,
       });
       console.log(response.data);
@@ -74,9 +122,13 @@ const Artists = () => {
               </div>
 
               <div className="artists-preview-buttons">
-                {<button className="follow-artist" onClick={() => handleAddFollow(artist)}>
+                { artist.isFollowed === false ? <button className="follow-artist" onClick={() => handleAddFollow(artist)}>
                   Follow
-                </button>}
+                </button> :
+                <button className="follow-artist" onClick={() => handleUnFollow(artist)}>
+                Unfollow
+              </button> 
+                }
                 <button className="view-artist-profile" onClick={() => handleViewPortfolio(artist.username)}>
                   View Profile
                 </button>
