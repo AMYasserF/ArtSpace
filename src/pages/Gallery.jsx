@@ -8,32 +8,77 @@ import { useEffect } from 'react';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ColorRing } from 'react-loader-spinner';
+import { useRef } from 'react';
 
 
 const Gallery = () => {
   const [selectedPost, setSelectedPost] = useState(null);
+  const [wishlist , setWishlist] = useState([]);
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const hasUpdatedArts = useRef(false); 
 
   useEffect(() => {
+    let isMounted = true; 
+
     const fetchArts = async () => {
       try {
         setLoading(true); // Start loading
         const response = await axios.get("http://localhost:3000/arts");
+        if (isMounted) {
         setArts(response.data);
         console.log(response.data);
+        }
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
       }
-     finally {
-      setLoading(false); // Stop loading
-    };
+    
   }
     fetchArts();
+    return () => {
+      isMounted = false; // Cleanup to prevent state updates after unmount
+    };
+    
   }, []); // Empty dependency array ensures this runs only once on mount
+
+
+  useEffect(() => {
+    const fetchwishlist = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/client/getWishlist");
+        setWishlist(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("Error fetching wishlists", error.response?.data || error.message);
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchwishlist();
+  }, []); 
+
+  useEffect(() => {
+   
+    if (!hasUpdatedArts.current && arts.length > 0 && wishlist.length >= 0) {
+      const updatedArts = arts.map(art => ({
+        ...art,
+        inWishlist: wishlist.some(item => item.artid === art.artid),
+      }));
+      console.log("Updated Arts:", updatedArts);
+      setArts(updatedArts); 
+      hasUpdatedArts.current = true; 
+    }
+  }, [arts, wishlist]);
+
+
+
   function handlePostClick (post){
+    console.log (post);
         setSelectedPost(post);
+
   }
 
   async function handleAddArtToWishlist(art){
@@ -44,7 +89,8 @@ const Gallery = () => {
       });
       console.log(response.data);
       toast.success("Added to wishlist Successfully");
-      art.inwhishlist = true;
+      setWishlist([...wishlist , art])
+        hasUpdatedArts.current = false;
     }
       catch(err)
       {
@@ -53,22 +99,25 @@ const Gallery = () => {
       }
     }
    
-   async function handleRemovefromWishlsit (art)  {
+    async function handleRemovefromWishlsit (art) {
       console.log("art removed from wishlist:" + art.artname);
 
       try{
-          const response = await axios.delete("http://localhost:3000/client/removeWishlist",{
-              artId : art.artid
+          const response = await axios.delete("http://localhost:3000/client/RemoveWishlist",{
+            params: { artId: art.artid }
           });
           console.log(response.data);
           toast.success("Removed from wishlist");
-          
+          setWishlist(prevWishlist => prevWishlist.filter(item => item.id !== art.id));
+          hasUpdatedArts.current = false;
+         
         }
         catch(err){
           console.log("Error in removing from wishlist");
           toast.error("Error Removing form Wishlist");
         }
       }
+
 
       
 
@@ -103,6 +152,7 @@ const Gallery = () => {
   }
   function handlePostClose() {
     setSelectedPost(null);
+
   }
     const posts = [];
       arts.map((art) =>{
@@ -117,7 +167,7 @@ const Gallery = () => {
           createdAt: art.realeasedate,
           profilePic: art.artistPic,
           comments: art.comments,
-          inwishlist: false
+          inWishlist: art.inWishlist
         });
       })
   return (
@@ -148,7 +198,7 @@ const Gallery = () => {
          addcomment={handleAddComment} 
          addtowishlist={handleAddArtToWishlist}  
          removewishlist={handleRemovefromWishlsit} 
-         inWishlist={selectedPost.inwishlist}
+         inWishlist={selectedPost.inWishlist}
          buyrequest={handleBuy}/>}
         </>)}
         </div>

@@ -6,9 +6,10 @@ import ReviewPopUp from './ReviewPopUp';
 import EditArtPopup from '../Portfolio/EditArtPopup';
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
+const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
+    
 
     const handleAddReview = () => {
       setReviewPopupOpen(true);
@@ -17,7 +18,9 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
     const handleEditArt =() => {
         setEditPopupOpen(true);
     }
-  
+
+   
+    
     const handleReviewSubmit = (newReview) => {
       console.log('New Review:', newReview);
       // Update the comments array or pass this data to a backend service
@@ -26,19 +29,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
      addcomment({comment,rating});
     };
 
-    async function handleaddtowhishlist(post){
-      console.log('added to wishlist')
-      console.log(post);
-      await addtowishlist(post);
-      onClose();
-    }
     
-    const HandleRemovewishlist =(post)=>{
-      console.log('removed from wishlist')
-     
-      removewishlist(post);
-      onClose();
-    }
     
     // to do --> handle the buy 
 
@@ -80,11 +71,11 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment, addtowishlis
   <>
     <div className="popup-buttons-art">
       {inWishlist === false ? 
-        <button className="add-wishlist-button-art" onClick={()=>{addtowishlist(post)}}>
+        <button className="add-wishlist-button-art" onClick={()=>{addtowishlist(post); onClose();}}>
           Add to Wishlist
         </button>
        : 
-        <button className="add-wishlist-button-art" onClick={HandleRemovewishlist}>
+        <button className="add-wishlist-button-art" onClick={()=>{removewishlist(post); onClose();}}>
           Remove from Wishlist
         </button>
       }
