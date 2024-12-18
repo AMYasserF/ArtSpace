@@ -85,8 +85,20 @@ const Artists = () => {
     }
   };
 
- 
   const handleUnFollow = async (artist) => {
+    console.log(`Add follow request: ${artist.username}`);
+    try {
+      const response = await axios.post('http://localhost:3000/client/removeFollower', {
+        artistId: artist.userid,
+      });
+      console.log(response.data);
+      toast.success('Follower added successfully');
+    } catch (err) {
+      console.log('Error in adding follow');
+      toast.error('Follower could not be added');
+    }
+  };
+  const handleUnFollow1 = async (artist) => {
     followings.filter((artistt) => artistt.userid !== artist.userid);
     console.log(`Add follow request: ${artist.username}`);
     try {
@@ -130,11 +142,11 @@ const Artists = () => {
 
           
 
-                {!followings.find((artistt) => artistt.userid === artist.userid)? <button className="follow-artist" onClick={() => handleAddFollow(artist)}>
+                {!followings.find((artistt) => artistt.userid === artist.userid)? <button className="follow-artist" onClick={() => handleAddFollow1(artist)}>
                   Follow
-                </button>:<button className="follow-artist" onClick={() => handleUnFollow(artist)}>Unfollow</button>}
+                </button>:<button className="follow-artist" onClick={() => handleUnFollow1(artist)}>Unfollow</button>}
 
-                <button className="view-artist-profile" onClick={() => handleViewPortfolio(artist.username)}>
+                <button className="view-artist-profile" onClick={() => handleViewPortfolio1(artist.username)}>
                   View Profile
                 </button>
               </div>
