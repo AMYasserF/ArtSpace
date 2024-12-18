@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import '../../css/ArtPopUp.css';
 import CommentSection from './CommentSection';
 import ReviewPopUp from './ReviewPopUp';
+import { ColorRing } from 'react-loader-spinner';
 import EditArtPopup from '../Portfolio/EditArtPopup';
+import ConfirmPurchasePopup from './ConfirmBuyPopup';
+import axios from 'axios';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
+
+const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
+    const [isBuynow , SetBuynow] = useState(false);
+    const [isloading , setLoading] = useState(true);
+    const [Commentsload , setCommentload] = useState([]);
+    const [refreshComments, setRefreshComments] = useState(false);
+
     
 
     const handleAddReview = () => {
@@ -19,31 +30,73 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist
         setEditPopupOpen(true);
     }
 
-   
-    
-    const handleReviewSubmit = (newReview) => {
-      console.log('New Review:', newReview);
-      // Update the comments array or pass this data to a backend service
-      const comment=newReview.comment;
-      const rating=newReview.rating;
-     addcomment({comment,rating});
+    const fetchComments = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/arts/comments", {
+          params: { artid: post.artid }
+        });
+        setCommentload(response.data); 
+        console.log("Comments fetched:", response.data);
+      } catch (error) {
+        console.log("Error fetching comments", error.response?.data || error.message);
+      } finally {
+        setLoading(false);
+      }
     };
+  
+    useEffect(() => {
+      fetchComments(); 
+    }, []);
+    
 
-    
-    
+    async function handleAddComment(review){
+      const newComment = {
+        artId: post.artid,
+        comment: review.comment,
+        rate: review.rating
+      }
+      console.log('Comment is:',newComment);
+      try{
+        const response = await axios.post("http://localhost:3000/client/review",newComment);
+        console.log("this" +response.data);
+        console.log("here");
+       
+       
+
+        toast.success("Comment added Successfully");
+        fetchComments();
+      }
+      catch(err){
+        console.log("Error in adding comment");
+        toast.error("Could not be added");
+      }
+    }
+  
+
     // to do --> handle the buy 
 
     const HandleBuyRequest =(post)=>{
       console.log('buy request for : ' + post.artname);
-      buyrequest(post);
-      onClose();
       
+      onClose();
     }
 
-  return (  
-    <>
-    { console.log(post)}
+  return (  <>
     <div className="popup-art">
+    <ToastContainer/>
+     {isloading ? ( // Show loader while loading
+                 <div className="spinner-container">
+                   <ColorRing
+                     visible={true}
+                     height={80}
+                     width={80}
+                     ariaLabel="color-ring-loading"
+                     colors={['#83905a' , '#98a724','#868d05','#4b7c01']} 
+                   />
+                 </div>
+               ) : (<>
+  
         <div className="popup-overlay-art" onClick={onClose}></div>
         <div className="popup-content-art">
           <button className="close-button-art" onClick={onClose}>
@@ -65,7 +118,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist
             }
             <h2 className="art-title-art">{post.artname}</h2>
             <p className="art-description-art"><strong>Description:</strong> {post.description}</p>
-            <p className="base-price-art"><strong>Base Price:</strong> {post.basePrice}</p>
+            {post.baseprice&&<p className="base-price-art"><strong>Base Price:</strong> {post.baseprice}$</p>}
              
             {theArtist === false ? 
   <>
@@ -83,7 +136,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist
         Add Review
       </button>
     </div>
-    <button className="buy-now-button-art" onClick={HandleBuyRequest}>Buy Now</button>
+    {post.baseprice && <button className="buy-now-button-art" onClick={(()=>SetBuynow(true))}>Buy Now</button>}
   </>
  : 
   <button className="Edit-art-info-art" onClick={handleEditArt}>
@@ -94,16 +147,18 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist
             
           <div className="comment-section-art">
             <h3>Comments</h3>
-            <CommentSection comments={post.comments} />
+            <CommentSection comments={Commentsload} />
           </div>
         </div>
       </div>
+      </>)}
     </div>
+
     {isReviewPopupOpen && (
       console.log("Review Popup Open"),
         <ReviewPopUp
           onClose={() => setReviewPopupOpen(false)}
-          onSubmit={handleReviewSubmit}
+          onSubmit={handleAddComment}
         />
       )}
 
@@ -114,6 +169,12 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave, addcomment,addtowishlist
           onSave={onSave}
           />
     )}
+    {isBuynow && 
+    <ConfirmPurchasePopup 
+       art = {post}
+       onClose={() => SetBuynow(false)}
+       onConfirm = {HandleBuyRequest}
+       />  }
 
     </>
   );

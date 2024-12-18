@@ -15,7 +15,7 @@ const handleInputChange = (e) => {
   };
 
   const handleSubmit = () => {
-    if (requestinfo.basePrice || !requestinfo.startdate||  !requestinfo.enddate) {
+    if (!requestinfo.basePrice || !requestinfo.startdate||  !requestinfo.enddate) {
       return;
 
       // add toast here 

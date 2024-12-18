@@ -61,7 +61,7 @@ function App() {
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery/>} />
-        <Route path='/portfolio' element={<Portfolio/>} />
+        <Route path='/portfolio' element={<Portfolio     viewonly={false} />  } />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
         <Route path='/artists' element={<Artists />} />
         <Route path='/following' element={<Followings />} />

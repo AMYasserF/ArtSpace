@@ -85,19 +85,7 @@ const Artists = () => {
     }
   };
 
-  const handleUnFollow = async (artist) => {
-    console.log(`Add follow request: ${artist.username}`);
-    try {
-      const response = await axios.post('http://localhost:3000/client/removeFollower', {
-        artistId: artist.userid,
-      });
-      console.log(response.data);
-      toast.success('Follower added successfully');
-    } catch (err) {
-      console.log('Error in adding follow');
-      toast.error('Follower could not be added');
-    }
-  };
+ 
   const handleUnFollow = async (artist) => {
     followings.filter((artistt) => artistt.userid !== artist.userid);
     console.log(`Add follow request: ${artist.username}`);
