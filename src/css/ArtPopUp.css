@@ -165,3 +165,8 @@
   .Edit-art-info-art:hover {
     background-color: #c1d03d;
   }
+
+  .toast-container {
+    z-index: 9999;
+  }
+  

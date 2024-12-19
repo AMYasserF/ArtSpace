@@ -119,3 +119,9 @@
 .confirm-button:hover {
     background-color: #218838;
 }
+
+
+.toast-container {
+    z-index: 9999;
+  }
+  

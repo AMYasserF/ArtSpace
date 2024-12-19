@@ -76,15 +76,29 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
 
     // to do --> handle the buy 
 
-    const HandleBuyRequest =(post)=>{
+    const HandleBuyRequest = async (post,purchasedescription)=>{
       console.log('buy request for : ' + post.artname);
+
+      try{
+        const response = await axios.post("http://localhost:3000/client/buy",{
+          artId:post.artid,
+          description:purchasedescription
+        });
+        console.log(response.data);
+        toast.success("Purchase successful! Thank you for your order.");
+        
+      }
+      catch(err){
+        console.log("Error in adding comment");
+        toast.error("Could not be added");
+      }
       
-      onClose();
+      
     }
 
   return (  <>
     <div className="popup-art">
-    <ToastContainer/>
+    <ToastContainer className="toast-container"/>
      {isloading ? ( // Show loader while loading
                  <div className="spinner-container">
                    <ColorRing

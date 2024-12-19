@@ -146,7 +146,7 @@ const Artists = () => {
                   Follow
                 </button>:<button className="follow-artist" onClick={() => handleUnFollow1(artist)}>Unfollow</button>}
 
-                <button className="view-artist-profile" onClick={() => handleViewPortfolio1(artist.username)}>
+                <button className="view-artist-profile" onClick={() => handleViewPortfolio(artist.username)}>
                   View Profile
                 </button>
               </div>

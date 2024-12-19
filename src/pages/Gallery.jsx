@@ -142,7 +142,6 @@ const Gallery = () => {
           baseprice: art.baseprice,
           createdAt: art.realeasedate,
           profilePic: art.artistPic,
-         // comments: art.comments,
           inWishlist: art.inWishlist
         });
       })
