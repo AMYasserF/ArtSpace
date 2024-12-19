@@ -75,7 +75,7 @@ const Portfolio = ({viewonly , thename }) => {
     formData.append("image", artDetails.image);
     formData.append("title", artDetails.title);
     formData.append("description", artDetails.description);
-    formData.append("basePrice", artDetails.basePrice || "");
+    formData.append("price", artDetails.basePrice || "");
     try {
       const response = await axios.post("http://localhost:3000/arts", formData, {
         headers: {
@@ -122,28 +122,6 @@ const Portfolio = ({viewonly , thename }) => {
       }
     }
     
-    async function handleAddComment(review){
-      console.log(review);
-      console.log(selectedArt.artid);
-      const newComment = {
-        artId: selectedArt.artid,
-        comment: review.comment,
-        rate: review.rating
-      }
-      console.log('Comment is:',newComment);
-      try{
-        const response = await axios.post("http://localhost:3000/client/review",newComment);
-        console.log(response.data);
-        selectedPost.comments.push(comment);
-        toast.success("Comment added Successfully");
-        
-      }
-      catch(err){
-        console.log("Error in adding comment");
-        toast.error("Could not be added");
-      }
-    }
-  //console.log(arts);
   return (
     <div className="portfolio">
       
@@ -179,7 +157,7 @@ const Portfolio = ({viewonly , thename }) => {
         </button>}
       </div>
       {console.log(viewonly)}
-      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addcomment={handleAddComment} addtowhishlist={handleAddArtToWishlist}/>}
+      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowhishlist={handleAddArtToWishlist}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
      
       </>)}

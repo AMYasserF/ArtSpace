@@ -120,30 +120,6 @@ const Gallery = () => {
 
 
       
-
-
-  async function handleAddComment(review){
-    console.log(review);
-    console.log(selectedPost.artid);
-    const newComment = {
-      artId: selectedPost.artid,
-      comment: review.comment,
-      rate: review.rating
-    }
-    console.log('Comment is:',newComment);
-    try{
-      const response = await axios.post("http://localhost:3000/client/review",newComment);
-      console.log(response.data);
-      selectedPost.comments.push(comment);
-      toast.success("Comment added Successfully");
-      
-    }
-    catch(err){
-      console.log("Error in adding comment");
-      toast.error("Could not be added");
-    }
-  }
-
   const handleBuy =(art) =>{
     console.log("buy request invoked");
     console.log(art);
@@ -163,10 +139,9 @@ const Gallery = () => {
           description: art.description,
           artistName: art.artistName,
           artistId: art.artistId,
-          basePrice: art.basePrice,
+          baseprice: art.baseprice,
           createdAt: art.realeasedate,
           profilePic: art.artistPic,
-          comments: art.comments,
           inWishlist: art.inWishlist
         });
       })
@@ -195,7 +170,6 @@ const Gallery = () => {
          post={selectedPost} 
          onClose={() => handlePostClose()} 
          theArtist={false}  
-         addcomment={handleAddComment} 
          addtowishlist={handleAddArtToWishlist}  
          removewishlist={handleRemovefromWishlsit} 
          inWishlist={selectedPost.inWishlist}

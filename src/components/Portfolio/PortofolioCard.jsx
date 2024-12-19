@@ -6,7 +6,7 @@ import RequestAuction from './RequestAuctionPopup';
 
 
 
-const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) => 
+const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete , viewonly }) => 
   {
     const [requestAuctionpopup , setRequestAuctionpopup] = useState(false);
     
@@ -25,7 +25,7 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) =>
       </button>
       <img src={art.photo} alt={art.artname} className="portfolio-card-image" />
       <h3 className="portfolio-card-title">{art.artname}</h3>
-      <button
+      {!viewonly && <button
         className="request-auction-button"
         onClick={(e) => {
           e.stopPropagation(); // Prevent triggering the card click event
@@ -33,7 +33,7 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete }) =>
         }}
       >
         Request Auction
-      </button>
+      </button>}
     </div>
     {requestAuctionpopup && <RequestAuction art={art}  sendRequest = {onAuctionRequest} onClose={()=>{requestAuctionpopup(false)}}/>}
       </>
