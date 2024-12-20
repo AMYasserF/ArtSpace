@@ -1,13 +1,20 @@
 import React from 'react';
 import { useState } from 'react';
 import "../../css/AuctionPopup.css"
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const RequestAuction = (art ,sendrequest , onClose )=>{
+const RequestAuction = ({art , SendRequest , onclose })=>{
 const [requestinfo , setrequestinfo] = useState({
     basePrice:"" ,
     startdate : "",
     enddate: ""
 });
+
+const transformToPostgresDate = (dateStr) => {
+  const [day, month, year] = dateStr.split('/');
+  return `${year}-${month}-${day}`;
+};
 
 const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,20 +23,30 @@ const handleInputChange = (e) => {
 
   const handleSubmit = () => {
     if (!requestinfo.basePrice || !requestinfo.startdate||  !requestinfo.enddate) {
+
+      toast.error("Please Fill All The Fields");
       return;
 
-      // add toast here 
+    
     }
-    //console.log(artDetails)
-    sendrequest; 
-    onClose; 
+   
+   let theStartdate = transformToPostgresDate(requestinfo.startdate);
+    let theEnddate = transformToPostgresDate(requestinfo.enddate);
+
+    requestinfo.startdate = theStartdate;
+    requestinfo.enddate = theEnddate;
+
+    SendRequest(art , requestinfo); 
+    onclose(); 
   };
 
 
 return (
-<div className='auction-request-popup'>
+  
+<div className='auction-request-popup' >
     <div className='auction-request-content'>
     <h2>Request Auction</h2>
+    <ToastContainer/>
 
     <input
             className="base-price-auction-request"
@@ -62,7 +79,7 @@ return (
         
         <div className="popup-buttons-auction-request">
           <button onClick={handleSubmit}>Submit Request</button>
-          <button onClick={onClose}>Cancel</button>
+          <button onClick={onclose}>Cancel</button>
         </div>
     </div>
 

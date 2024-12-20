@@ -32,9 +32,7 @@ const Gallery = (Logged) => {
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
       }
-      finally{
-        setLoading(false); // Stop loading
-      }
+      
     
   }
     fetchArts();
@@ -76,6 +74,7 @@ const Gallery = (Logged) => {
       }));
       console.log("Updated Arts:", updatedArts);
       setArts(updatedArts); 
+      setLoading(false)
       hasUpdatedArts.current = true; 
     }
   }, [arts, wishlist]);
