@@ -85,6 +85,10 @@
     margin: 10px 0;
   }
 
+  .comment-section-art h3{
+    font-size: large;
+  }
+  
   .popup-buttons-art {
     display: flex;
     justify-content: space-between; 
@@ -161,6 +165,8 @@
     transition: background-color 0.3s ease;
     background-color: #a3aa84;
     color: white;
+    margin-bottom: 15px;
+    margin-top: 12px;
   }
   .Edit-art-info-art:hover {
     background-color: #c1d03d;

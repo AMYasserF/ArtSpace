@@ -1,92 +1,97 @@
-import React from 'react';
-import { useState } from 'react';
-import "../../css/AuctionPopup.css"
-import { toast,ToastContainer } from 'react-toastify';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import "../../css/AuctionPopup.css";
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../css/custom-datepicker.css';
 
-const RequestAuction = ({art , SendRequest , onclose })=>{
-const [requestinfo , setrequestinfo] = useState({
-    basePrice:"" ,
-    startdate : "",
-    enddate: ""
-});
+const RequestAuction = ({ art, SendRequest, onclose }) => {
+    const [requestinfo, setrequestinfo] = useState({
+        basePrice: "",
+        startdate: null,
+        enddate: null
+    });
 
-const transformToPostgresDate = (dateStr) => {
-  const [day, month, year] = dateStr.split('/');
-  return `${year}-${month}-${day}`;
-};
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setrequestinfo((prevDetails) => ({ ...prevDetails, [name]: value }));
+    };
 
-const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setrequestinfo((prevDetails) => ({ ...prevDetails, [name]: value }));
-  };
+    const handleDateChange = (date, fieldName) => {
+        setrequestinfo((prevDetails) => ({ ...prevDetails, [fieldName]: date }));
+    };
 
-  const handleSubmit = () => {
-    if (!requestinfo.basePrice || !requestinfo.startdate||  !requestinfo.enddate) {
+    const handleSubmit = () => {
+        const { basePrice, startdate, enddate } = requestinfo;
 
-      toast.error("Please Fill All The Fields");
-      return;
+        if (!basePrice || !startdate || !enddate) {
+            toast.error("Please Fill All The Fields");
+            return;
+        }
 
-    
-    }
-   
-   let theStartdate = transformToPostgresDate(requestinfo.startdate);
-    let theEnddate = transformToPostgresDate(requestinfo.enddate);
+        // Convert dates to UTC before sending to the backend
+        const formattedStartDate = new Date(
+            startdate.getTime() - startdate.getTimezoneOffset() * 60000
+        ).toISOString();
 
-    requestinfo.startdate = theStartdate;
-    requestinfo.enddate = theEnddate;
+        const formattedEndDate = new Date(
+            enddate.getTime() - enddate.getTimezoneOffset() * 60000
+        ).toISOString();
 
-    SendRequest(art , requestinfo); 
-    onclose(); 
-  };
+        const auctionRequest = {
+            basePrice,
+            startdate: formattedStartDate,
+            enddate: formattedEndDate,
+        };
 
+        SendRequest(art, auctionRequest);
+        onclose();
+    };
 
-return (
-  
-<div className='auction-request-popup' >
-    <div className='auction-request-content'>
-    <h2>Request Auction</h2>
-    <ToastContainer/>
+    return (
+        <div className='auction-request-popup'>
+            <div className='auction-request-content'>
+                <h2>Request Auction</h2>
+                <ToastContainer />
 
-    <input
-            className="base-price-auction-request"
-            placeholder="Desired base price"
-            type="number"
-            name="basePrice"
-            value={requestinfo.basePrice}
-            onChange={handleInputChange}
-            min="0"
-          />  
+                <input
+                    className="base-price-auction-request"
+                    placeholder="Desired base price"
+                    type="number"
+                    name="basePrice"
+                    value={requestinfo.basePrice}
+                    onChange={handleInputChange}
+                    min="0"
+                />
 
-          <input
-          className="start-date-auction-request"
-           placeholder="Auction Start Date: DD/MM/YY"
-            type="text"
-            name="startdate"
-            value={requestinfo.startdate}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            className="end-date-auction-request"
-            placeholder="Auction End Date: DD/MM/YY"
-            name="enddate"
-            value={requestinfo.enddate}
-            onChange={handleInputChange}
-            required
-          />
-          
-        
-        <div className="popup-buttons-auction-request">
-          <button onClick={handleSubmit}>Submit Request</button>
-          <button onClick={onclose}>Cancel</button>
+                <DatePicker
+                    className="start-date-auction-request"
+                    selected={requestinfo.startdate}
+                    onChange={(date) => handleDateChange(date, 'startdate')}
+                    placeholderText="Auction Start Date"
+                    dateFormat="yyyy-MM-dd"
+                    minDate={new Date()}
+                    required
+                />
+
+                <DatePicker
+                    className="end-date-auction-request"
+                    selected={requestinfo.enddate}
+                    onChange={(date) => handleDateChange(date, 'enddate')}
+                    placeholderText="Auction End Date"
+                    dateFormat="yyyy-MM-dd"
+                    minDate={requestinfo.startdate || new Date()}
+                    required
+                />
+
+                <div className="popup-buttons-auction-request">
+                    <button onClick={handleSubmit}>Submit Request</button>
+                    <button onClick={onclose}>Cancel</button>
+                </div>
+            </div>
         </div>
-    </div>
-
-</div>
-)
-
-
-}
+    );
+};
 
 export default RequestAuction;
