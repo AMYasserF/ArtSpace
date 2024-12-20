@@ -21,49 +21,42 @@ const Portfolio = ({viewonly , thename }) => {
   const { artistname } = useParams(); 
 
   useEffect(() => {
-    
-    const fetchArts = async () => {
+    const fetchArtsAndWishlist = async () => {
       const requiredName = viewonly ? artistname : thename;
-    
+  
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:3000/client/arts" ,  {
-          artistname : requiredName
+  
+        
+        let fetchedWishlist = [];
+        if (viewonly) {
+          const wishlistResponse = await axios.get("http://localhost:3000/client/getWishlist");
+          fetchedWishlist = wishlistResponse.data;
+          setWishlist(fetchedWishlist);
+        }
+  
+        // Fetch the arts
+        const artsResponse = await axios.post("http://localhost:3000/client/arts", {
+          artistname: requiredName,
         });
-       
-         setArts(response.data);
+        const fetchedArts = artsResponse.data;
+  
+        // Check each art against the wishlist
+        const updatedArts = fetchedArts.map((art) => ({
+          ...art,
+          inWishlist: fetchedWishlist.some((wishlistArt) => wishlistArt.artid === art.artid),
+        }));
+  
+        setArts(updatedArts);
       } catch (error) {
-        console.log("Error fetching user arts", error.response?.data || error.message);
-      }
-      finally{
+        console.error("Error fetching arts or wishlist", error.response?.data || error.message);
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchArts();
-  },  [viewonly, artistname, thename]); // Empty dependency array ensures this runs only once on mount
- 
-  const fetchwishlist = async () => {
-    try {
-    
-      const response = await axios.get("http://localhost:3000/client/getWishlist");
-      setWishlist(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log("Error fetching wishlists", error.response?.data || error.message);
-    }
-    finally{
-      
-    }
-  };
-
-   useEffect(() => {
-      console.log("Fetching wishlist");
-      fetchwishlist();
-    }
-  , []); 
-
-
+  
+    fetchArtsAndWishlist();
+  }, [viewonly, artistname, thename]);
 
   const handleEditSave = async (updatedArt) => {
     try {
@@ -161,6 +154,7 @@ const Portfolio = ({viewonly , thename }) => {
       console.log(response.data);
       toast.success("Added to wishlist Successfully");
       setWishlist([...wishlist , art])
+      art.inWishlist = true;
     }
       catch(err)
       {
@@ -179,6 +173,7 @@ const Portfolio = ({viewonly , thename }) => {
           console.log(response.data);
           toast.success("Removed from wishlist");
           setWishlist(prevWishlist => prevWishlist.filter(item => item.id !== art.id));
+          art.inWishlist = false;
           
          
         }
@@ -224,7 +219,7 @@ const Portfolio = ({viewonly , thename }) => {
         </button>}
       </div>
       
-      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowhishlist={handleAddArtToWishlist} removewishlist={handleRemovefromWishlsit} inWishlist={selectedArt.inWishlist}/>}
+      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowishlist={handleAddArtToWishlist} removewishlist={handleRemovefromWishlsit} inWishlist={selectedArt.inWishlist}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
      
       </>)}

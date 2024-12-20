@@ -1,0 +1,103 @@
+/* 
+.react-datepicker {
+    font-family: 'Arial', sans-serif;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+
+.react-datepicker__header {
+    background-color: #fafafa;
+    color: black;
+    border-bottom: 2px solid gold;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.react-datepicker__current-month {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.react-datepicker__navigation {
+    width: 1rem;
+    height: 1rem;
+    border-style: solid;
+    border-width: 0.4rem;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.react-datepicker__navigation--previous {
+    border-color: transparent black transparent transparent;
+    margin-right: 10px;
+}
+
+.react-datepicker__navigation--next {
+    border-color: transparent transparent transparent black;
+    margin-left: 10px;
+}
+
+
+.react-datepicker__day-names {
+    color: black;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    padding: 5px 0;
+}
+
+
+.react-datepicker__day {
+    color: black;
+    background-color: white;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.9rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.2rem;
+}
+
+
+.react-datepicker__day:hover {
+    background-color: gold;
+    color: black;
+    transform: scale(1.1);
+}
+
+
+.react-datepicker__day--selected {
+    background-color: gold;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.react-datepicker__day--disabled {
+    color: #bbb;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+
+.react-datepicker__navigation:hover {
+    border-color: gold;
+}  */
