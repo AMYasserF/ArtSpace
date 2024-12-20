@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import "../../css/AuctionPopup.css"
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RequestAuction = (art ,sendrequest , onClose )=>{
 const [requestinfo , setrequestinfo] = useState({
@@ -21,6 +23,12 @@ const handleInputChange = (e) => {
       // add toast here 
     }
     console.log(artDetails)
+    theStartdate = new Date(requestinfo.startdate);
+    theEnddate = new Date(requestinfo.enddate);
+
+    requestinfo.startdate = theStartdate;
+    requestinfo.enddate = theEnddate;
+
     sendrequest(art , requestinfo); 
     onClose(); 
   };
@@ -30,6 +38,7 @@ return (
 <div className='auction-request-popup'>
     <div className='auction-request-content'>
     <h2>Request Auction</h2>
+    <ToastContainer/>
 
     <input
             className="base-price-auction-request"
