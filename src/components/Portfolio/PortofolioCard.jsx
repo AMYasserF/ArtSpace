@@ -10,6 +10,7 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete , viewonly }) 
   {
     const [requestAuctionpopup , setRequestAuctionpopup] = useState(false);
     
+    
 
   return (
     <>
@@ -35,7 +36,8 @@ const PortfolioCard = ({ art, onClick, onAuctionRequest ,onDelete , viewonly }) 
         Request Auction
       </button>}
     </div>
-    {requestAuctionpopup && <RequestAuction art={art}  sendRequest = {onAuctionRequest} onClose={()=>{requestAuctionpopup(false)}}/>}
+    {requestAuctionpopup && <RequestAuction art={art}  SendRequest = {onAuctionRequest} onclose={() => setRequestAuctionpopup(false)} /> }
+
       </>
   );
 };

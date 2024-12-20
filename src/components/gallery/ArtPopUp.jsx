@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewishlist , inWishlist , buyrequest}) => {
+const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewishlist , inWishlist }) => {
     const [isReviewPopupOpen, setReviewPopupOpen] = useState(false);
     const [isEditPopupOpen , setEditPopupOpen] = useState(false);
     const [isBuynow , SetBuynow] = useState(false);
@@ -73,9 +73,6 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
       }
     }
   
-
-    // to do --> handle the buy 
-
     const HandleBuyRequest = async (post,purchasedescription)=>{
       console.log('buy request for : ' + post.artname);
 
@@ -89,7 +86,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
         
       }
       catch(err){
-        console.log("Error in adding comment");
+        console.log("Error in buying item");
         toast.error("Could not be added");
       }
       
