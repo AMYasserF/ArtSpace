@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../../css/popupForm.css";
-
+import axios from "axios";
+import { toast,ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const PopupForm = ({ exhibition, onClose }) => {
   const [formData, setFormData] = useState({
     title: exhibition ? exhibition.title : "",
@@ -19,12 +21,19 @@ const PopupForm = ({ exhibition, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Exhibition data submitted:", formData);
+    axios.post("http://localhost:3000/admin/exhibition",formData).then((response) => {
+      console.log("Exhibition added successfully", response.data);
+      toast.success("Exhibition added successfully");
+    }).catch((err) => {
+      console.error("Error adding exhibition", err);
+      toast.error("Could not add exhibition");
+    });  
     onClose();
   };
 
   return (
     <div className="popup-overlay">
+      <ToastContainer/>
       <div className="popup">
         <h2>{exhibition ? "Modify Exhibition" : "Add New Exhibition"}</h2>
         <form onSubmit={handleSubmit}>

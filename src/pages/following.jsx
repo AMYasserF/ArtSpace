@@ -64,7 +64,7 @@ const FollowList = () => {
         </div>
       ) : (
         <div className="all-artists-table">
-          {artists.map((artist) => (
+          {Follows.map((artist) => (
             <div className="artists-preview-card" key={artist.userid}>
               <img className="artists-preview-profile-pic" src={artist.profilepic} alt={`${artist.username}'s profile`} />
 

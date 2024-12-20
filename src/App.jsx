@@ -16,6 +16,8 @@ import Settings from './pages/Settings';
 import FeedBack from './pages/FeedBack';
 import Reciepts from './pages/receipts';
 import Wishlist from './pages/wishlist';
+import Auction from './pages/Auction';
+import Followers from './pages/followers';
 //import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -60,7 +62,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/gallery' element={<Gallery/>} />
+        <Route path='/gallery' element={<Gallery Logged={logged}/>} />
         <Route path='/portfolio' element={<Portfolio     viewonly={false} />  } />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
         <Route path='/artists' element={<Artists />} />
@@ -70,6 +72,8 @@ function App() {
         <Route path ='/portfolio/preview/:artistname' element={<Portfolio viewonly={true} />} />
         <Route path='/Purchase-history' element={<Reciepts/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
+        <Route path='/auctions' element={<Auction />} />
+        <Route path='/followers' element={<Followers/>} />
       </Route>
     )
   );

@@ -1,12 +1,25 @@
 import '../../css/GallaryPreview.css';
 import { Link } from 'react-router-dom';
-
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 function GallaryPreview() {
-  const arts = [
-    { id: 1, title: "Sunset Glow", image: "./src/assets/testImages/download.jpg" },
-    { id: 2, title: "Ocean Depths", image: "./src/assets/testImages/download (1).jpg" },
-    { id: 3, title: "Forest Whispers", image: "./src/assets/testImages/images.jpg" },
-  ];
+  const [arts, setArts] = useState([]);
+
+  useEffect(() => {
+
+    const fetchArts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/arts/preview");
+        setArts(response.data);
+        console.log(response.data);
+        }
+       catch (error) {
+        console.log("Error fetching user arts", error.response?.data || error.message);
+      }
+    };
+      fetchArts();
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   return (
     <div className="gallerypreview">
@@ -16,8 +29,8 @@ function GallaryPreview() {
       <div className="gallerypreview-grid">
         {arts.map(art => (
           <div key={art.id} className="gallerypreview-item">
-            <img src={art.image} alt={art.title} />
-            <p>{art.title}</p>
+            <img src={art.photo} alt={art.artname} />
+            <p>{art.artname}</p>
           </div>
         ))}
         <div className='viewmore'>

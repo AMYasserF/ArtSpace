@@ -14,11 +14,11 @@ const ManageUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/Admin/Users");
+        const response = await axios.get("http://localhost:3000/admin/Users");
         setUsers(response.data);
         console.log(response.data);
       } catch (error) {
-        console.log("Error fetching user arts", error.response?.data || error.message);
+        console.log("Error fetching user ", error.response?.data || error.message);
       }
     };
 
@@ -40,8 +40,24 @@ const ManageUsers = () => {
     }
   };
   const handleMakeAdmin = (user) => {
+    axios.post("http://localhost:3000/Admin/MakeAdmin",{
+      username:user.username
+    }).then((response)=>{console.log(response.data);
+      toast.success("User has been made admin successfully");
+    }).catch((err)=>{toast.error("Error making user admin");
+      console.log(err);
+      toast.error("Error making user admin");
+    })
   };
   const handleChangeRoleToClient = (user) => {
+    axios.post("http://localhost:3000/Admin/RemoveAdmin",{
+      username:user.username
+    }).then((response)=>{
+      console.log(response.data);
+      toast.success("User has been removed from admin successfully");
+    }).catch((err)=>{
+      console.log(err);
+      toast.error("Error removing user from admin");});
   };
   // Closes the popup form
   const handleClosePopup = () => {
@@ -58,7 +74,7 @@ const ManageUsers = () => {
           <div key={user.id} className="user-row">
             <span>{user.name}</span>
             <span>{user.role}</span>
-            {user.role === 'Admin' ?<button onClick={()=>handleChangeRoleToClient(user)}>UnAdmin</button> :<button onClick={() => handleMakeAdmin(user)}>Block</button>}
+            {user.role === 'Admin' ?<button onClick={()=>handleChangeRoleToClient(user)}>UnAdmin</button> :<button onClick={() => handleMakeAdmin(user)}>Make Admin</button>}
             <input type="text" onChange={(e) => setReason(e.target.value)}/>
             <button onClick={() => handleBlockClick(user)}>Block</button>
           </div>

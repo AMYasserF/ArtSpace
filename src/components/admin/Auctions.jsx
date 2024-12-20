@@ -1,32 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PopupForm from "./PopupFormA";
 import "../../css/auctions.css";
+import axios from "axios";
 
 const Auctions = () => {
-  // Example data for requested auctions
-  const auctionRequests = [
-    {
-      id: 1,
-      artPhoto: "https://via.placeholder.com/150",
-      artistName: "Vincent van Gogh",
-      artName: "Starry Night",
-    },
-    {
-      id: 2,
-      artPhoto: "https://via.placeholder.com/150",
-      artistName: "Leonardo da Vinci",
-      artName: "Mona Lisa",
-    },
-    {
-      id: 3,
-      artPhoto: "https://via.placeholder.com/150",
-      artistName: "Salvador Dalí",
-      artName: "The Persistence of Memory",
-    },
-  ];
+
 
   const [selectedAuction, setSelectedAuction] = useState(null); // Tracks the selected auction
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Tracks the popup state
+  const [auctionRequests, setAuctionRequests] = useState([]); // Tracks the auction requests
+  useEffect(() => {
+    axios.get("http://localhost:3000/admin/req/auctions").then((response) => {
+      setAuctionRequests(response.data);
+      console.log(response.data);
+    }).catch((err) => {
+      console.error("Error fetching auction requests", err);
+    });
+  }, []);
 
   // Opens the popup form for the selected auction
   const handleAcceptClick = (auction) => {

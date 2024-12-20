@@ -73,12 +73,33 @@ const Portfolio = ({viewonly , thename }) => {
    
     console.log(art);
     console.log(request);
-
+    axios.post("http://localhost:3000/artist/art/auction",{
+      artId: art.id,
+      basePrice: request.basePrice,
+      startDate: request.startDate,
+      endDate: request.endDate
+    }).then((response)=>{
+      console.log(response.data);
+      toast.success("Auction Requested Successfully");
+    }).catch((err)=>{
+      console.log("Error in requesting auction");
+      toast.error("Could not request auction");
+    });
     //  ---> todo backend
   };
 
   const handleDeleteArt=(art)=>{
     console.log(`delete art request:${art.title}`);
+    axios.post("http://localhost:3000/artist/art/delete",{
+      artId:art.artid
+    }).then((response)=>{
+      console.log(response.data);
+      toast.success("Art deleted successfully");
+    }).catch((err)=>{
+      console.log(err);
+      console.log("Error in deleting art");
+      toast.error("Error "+err.response.data);
+    });
     // to do -->   delete art
   }
 
@@ -123,7 +144,7 @@ const Portfolio = ({viewonly , thename }) => {
   function handleAddArtToWishlist(art){
     try{
       const response = axios.post("http://localhost:3000/client/addWishlist",{
-        artId:art.id
+        artId:art.artid
       });
       console.log(response.data);
       toast.success("Added to wishlist Successfully");

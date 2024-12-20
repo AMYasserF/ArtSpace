@@ -15,6 +15,7 @@ const FeedBack = () => {
         const response = await axios.get("http://localhost:3000/user/UserFeedback");
         setFeedback(response.data);
         console.log(response.data);
+        if(response.data)
         setExistingFeedback(true);
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
@@ -48,7 +49,7 @@ const FeedBack = () => {
         console.error('Error submitting feedback:', error);
       });
   };
-  const handleUpdate = (feedback) => {
+  const handleUpdate = () => {
     setFeedback(feedback.description);
     setRating(feedback.rating);
     axios.put('http://localhost:3000/user/Feedback', {feedbackId:feedback.feedid}).
@@ -103,25 +104,28 @@ const FeedBack = () => {
       </form>
     </div>:      
     <div className="existing-feedback">
-        <h2>You already have an existing Feedback</h2>
-          <div className="feedback-item">
-            <p>{feedback.description}</p>
-            <Stars
-              count={5}
-              value={feedback.rating}
-              size={30}
-              isHalf={true}
-              edit={false}
-              activeColor="#ffd700"
-  ></Stars>
-            <div className="feedback-actions">
-              {
-              //<button onClick={() => handleUpdate(feedback)}>Update</button>}
-              }
-              <button onClick={() => handleDelete(feedback)}>Delete</button>
-            </div>
-          </div>
+    <h2>You already have an existing Feedback</h2>
+      <div className="feedback-item">
+        <textarea 
+          value={feedback.description} 
+          onChange={(e) => handleFeedbackChange(e, 'description')} 
+          className="form-control mb-2"
+        />
+        <Stars
+          count={5}
+          value={feedback.rating}
+          size={30}
+          isHalf={true}
+          edit={true}
+          onChange={(newRating) => handleFeedbackChange({ target: { value: newRating } }, 'rating')}
+          activeColor="#ffd700"
+        />
+        <div className="feedback-actions mt-2">
+          <button className="btn btn-primary me-2" onClick={() => handleUpdate(feedback)}>Update</button>
+          <button className="btn btn-danger" onClick={() => handleDelete(feedback)}>Delete</button>
+        </div>
       </div>
+  </div>
   );
 };
 
