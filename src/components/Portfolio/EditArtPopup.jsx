@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import '../../css/EditArtPopup.css';
 
 const EditArtPopup = ({ art, onClose, onSave }) => {
-  const [title, setTitle] = useState(art.artname);
+  const [artname, setArtname] = useState(art.artname);
   const [description, setDescription] = useState(art.description);
-  const [basePrice, setBasePrice] = useState(art.basePrice);
+  const [baseprice, setBasePrice] = useState(art.baseprice);
 
   const handleSave = () => {
-    const updatedArt = { ...art, title, description, basePrice };
+    const updatedArt = { ...art, artname, description, baseprice };
     onSave(updatedArt);
     onClose();
   };
@@ -25,8 +25,8 @@ const EditArtPopup = ({ art, onClose, onSave }) => {
           <input
             type="text"
             id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={artname}
+            onChange={(e) => setArtname(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -42,7 +42,7 @@ const EditArtPopup = ({ art, onClose, onSave }) => {
           <input
             type="text"
             id="basePrice"
-            value={basePrice}
+            value={baseprice}
             onChange={(e) => setBasePrice(e.target.value)}
           />
         </div>

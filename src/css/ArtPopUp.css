@@ -151,10 +151,10 @@
     z-index: 3;
   }
   .Edit-art-info-art{
-    flex: 1;
-    padding: 10px;
+    display: block;
+    padding: 5px;
     margin: 0 5px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;

@@ -46,10 +46,23 @@ const Portfolio = ({viewonly , thename }) => {
     fetchArts();
   },  [viewonly, artistname, thename]); // Empty dependency array ensures this runs only once on mount
  
-  const handleEditSave = (updatedArt) => {
+  const handleEditSave = async (updatedArt) => {
+    console.log("hello")
+    console.log(updatedArt.baseprice);
+    try {
     setArts((prevArts) =>
-      prevArts.map((art) => (art.id === updatedArt.id ? updatedArt : art))
+      prevArts.map((art) => (art.artid === updatedArt.artid ? updatedArt : art))
+  
     );
+
+    const result = await axios.put("http://localhost:3000/arts/edit" , updatedArt)
+    setSelectedArt(null);
+   // console.log(result.data);
+
+  }
+  catch(err){
+
+  }
   };
   
   const handleArtClick = (art) => {
@@ -156,7 +169,7 @@ const Portfolio = ({viewonly , thename }) => {
           <FontAwesomeIcon icon={faPalette}  style={{ fontSize: '1.5em', color: '#dfdf82' }} />
         </button>}
       </div>
-      {console.log(viewonly)}
+      
       {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowhishlist={handleAddArtToWishlist}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
      

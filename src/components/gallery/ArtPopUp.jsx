@@ -18,7 +18,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
     const [isBuynow , SetBuynow] = useState(false);
     const [isloading , setLoading] = useState(true);
     const [Commentsload , setCommentload] = useState([]);
-    const [refreshComments, setRefreshComments] = useState(false);
+    
 
     
 
@@ -95,6 +95,8 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
       
       
     }
+
+    
 
   return (  <>
     <div className="popup-art">
