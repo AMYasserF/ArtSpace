@@ -1,37 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import PopupForm from "./PopupFormE";
 import ManageArtworksPopup from "./ManageArtworksPopup";
 import "../../css/exhibitions.css";
+import axios from "axios";
 
 const Exhibitions = () => {
   // Example ongoing exhibitions data (using theme as primary key)
-  const [exhibitions, setExhibitions] = useState([
-    {
-      theme: "Impressionism",
-      title: "The Beauty of Light",
-      startDate: "2024-06-01",
-      endDate: "2024-06-30",
-      artworks: [
-        { id: 1, name: "Starry Night", artist: "Vincent van Gogh", image: "https://via.placeholder.com/150" },
-        { id: 2, name: "Mona Lisa", artist: "Leonardo da Vinci", image: "https://via.placeholder.com/150" },
-      ],
-    },
-    {
-      theme: "Renaissance",
-      title: "Masters of the Renaissance",
-      startDate: "2024-07-01",
-      endDate: "2024-07-15",
-      artworks: [
-        { id: 3, name: "The Last Supper", artist: "Leonardo da Vinci", image: "https://via.placeholder.com/150" },
-        { id: 4, name: "David", artist: "Michelangelo", image: "https://via.placeholder.com/150" },
-      ],
-    },
-  ]);
-
+  const [exhibitions, setExhibitions] = useState([]);
   const [selectedExhibition, setSelectedExhibition] = useState(null); // Tracks the exhibition being modified
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Tracks if the create/edit exhibition popup is open
   const [isArtworkPopupOpen, setIsArtworkPopupOpen] = useState(false); // Tracks if the artwork management popup is open
-
+  useEffect(() => {
+    axios.get("http://localhost:3000/admin/exhibition").then((response) => {
+      setExhibitions(response.data);
+      console.log(response.data);
+    }).catch((err) => {
+      console.error("Error fetching auction requests", err);
+    });
+  }, []);
   // Opens the popup form for adding a new exhibition
   const handleAddExhibition = () => {
     setSelectedExhibition(null); // Reset selected exhibition for adding a new one
@@ -66,16 +52,15 @@ const Exhibitions = () => {
           <div key={exhibition.theme} className="exhibition-card">
             <h2>{exhibition.title}</h2>
             <p><strong>Theme:</strong> {exhibition.theme}</p>
-            <p><strong>Start Date:</strong> {exhibition.startDate}</p>
-            <p><strong>End Date:</strong> {exhibition.endDate}</p>
+            <p><strong>Start Date:</strong> {exhibition.startdate}</p>
+            <p><strong>End Date:</strong> {exhibition.enddate}</p>
             
             <div className="exhibition-artworks">
               <h3>Included Artworks:</h3>
               {exhibition.artworks.map((artwork) => (
-                <div key={artwork.id} className="artwork">
-                  <img src={artwork.image} alt={artwork.name} />
-                  <p>{artwork.name} by {artwork.artist}</p>
-                  <span className="remove-artwork" onClick={() => handleManageArtworks(exhibition)}>❌</span>
+                <div key={artwork.artid} className="artwork">
+                  <img src={artwork.photo} alt={artwork.artname} />
+                  <p>{artwork.artname} by {artwork.artistName}</p>
                 </div>
               ))}
             </div>

@@ -3,7 +3,9 @@ import React from 'react'
 import categories from '../assets/images/ArtCategories.jpg'
 import artists from '../assets/images/Artists.jpg'
 import auctions from '../assets/images/auctions.jpg'
+
 const HighlightsSection = () => {
+
   return (
     <section className="highlights">
       <div className="highlights-container">

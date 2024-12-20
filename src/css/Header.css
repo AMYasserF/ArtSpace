@@ -1,0 +1,79 @@
+.navbar-toggler {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    transition: 0.5s ease-in-out;
+    color: #a98d00;
+    border-color: #a98d00;
+    border-radius: 1rem;
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+
+.navbar-toggler span {
+    margin: 0;
+    padding: 0;
+}
+
+.toggler-icon {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: #a98d00; /* White color for the toggler lines */
+    border-radius: 10px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+}
+
+.middle-bar {
+    margin-top: 0px;
+}
+
+
+.navbar-toggler .top-bar {
+    transform: rotate(135deg);
+    margin-top: 0px;
+}
+
+.navbar-toggler .btm-bar {
+    transform: rotate(-135deg);
+    margin-top: 0px;
+}
+
+.navbar-toggler .mid-bar {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+
+.navbar-toggler.collapsed .top-bar {
+    transform: rotate(0deg);
+    margin-bottom: 20px;
+}
+
+.navbar-toggler.collapsed .btm-bar {
+    transform: rotate(0deg);
+    margin-top: 20px;
+}
+
+.navbar-toggler.collapsed .mid-bar {
+    opacity: 1;
+    filter: alpha(opacity=1);
+}
+
+.navbar-toggler-icon {
+    background-image: none; /* Hide the default icon */
+}
+.headerbg{
+    background-color: #a98d00;
+}

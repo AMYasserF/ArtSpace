@@ -11,7 +11,7 @@ import { ColorRing } from 'react-loader-spinner';
 import { useRef } from 'react';
 
 
-const Gallery = () => {
+const Gallery = (Logged) => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [wishlist , setWishlist] = useState([]);
   const [arts, setArts] = useState([]);
@@ -32,6 +32,9 @@ const Gallery = () => {
       } catch (error) {
         console.log("Error fetching user arts", error.response?.data || error.message);
       }
+      finally{
+        setLoading(false); // Stop loading
+      }
     
   }
     fetchArts();
@@ -41,24 +44,28 @@ const Gallery = () => {
     
   }, []); // Empty dependency array ensures this runs only once on mount
 
+  const fetchwishlist = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("http://localhost:3000/client/getWishlist");
+      setWishlist(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error fetching wishlists", error.response?.data || error.message);
+    }
+    finally{
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchwishlist = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("http://localhost:3000/client/getWishlist");
-        setWishlist(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log("Error fetching wishlists", error.response?.data || error.message);
-      }
-      finally{
-        setLoading(false);
-      }
-    };
-
+    console.log("Logged:", Logged);
+    if(Logged==="true"){
+      console.log("Fetching wishlist");
     fetchwishlist();
-  }, []); 
+  }
+}, []); 
+
 
   useEffect(() => {
    

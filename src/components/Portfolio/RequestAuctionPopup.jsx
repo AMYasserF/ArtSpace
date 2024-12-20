@@ -20,9 +20,9 @@ const handleInputChange = (e) => {
 
       // add toast here 
     }
-    console.log(artDetails)
-    sendrequest(art , requestinfo); 
-    onClose(); 
+    //console.log(artDetails)
+    sendrequest; 
+    onClose; 
   };
 
 

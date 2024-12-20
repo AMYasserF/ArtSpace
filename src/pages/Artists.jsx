@@ -58,7 +58,7 @@ const Artists = () => {
   const setIsFollow = () =>{ 
     return artists.map(artist => ({
       ...artist,
-      isFollowed: following.some(follow => follow.userid === artist.userid) // Check if artist.id exists in following
+      isFollowed: followings.some(follow => follow.userid === artist.userid) // Check if artist.id exists in following
     }));
   
   }
@@ -77,7 +77,7 @@ const Artists = () => {
         artistId: artist.userid,
       });
       console.log(response.data);
-      setFollowing([...Following , artist]);
+      setFollowings([...followings , artist]);
       toast.success('Follower added successfully');
     } catch (err) {
       console.log('Error in adding follow');
@@ -142,7 +142,7 @@ const Artists = () => {
 
           
 
-                {!followings.find((artistt) => artistt.userid === artist.userid)? <button className="follow-artist" onClick={() => handleAddFollow1(artist)}>
+                {!followings.find((artistt) => artistt.userid === artist.userid)? <button className="follow-artist" onClick={() => handleAddFollow(artist)}>
                   Follow
                 </button>:<button className="follow-artist" onClick={() => handleUnFollow1(artist)}>Unfollow</button>}
 
