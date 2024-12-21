@@ -21,12 +21,18 @@ const PopupForm = ({ exhibition, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Exhibition details");
     axios.post("http://localhost:3000/admin/exhibition",formData).then((response) => {
       console.log("Exhibition added successfully", response.data);
+      // wait 3 seconds before closing the popup
+      setTimeout(() => {
       toast.success("Exhibition added successfully");
+      }, 3000);
     }).catch((err) => {
       console.error("Error adding exhibition", err);
+      setTimeout(() => {
       toast.error("Could not add exhibition");
+      },3000);
     });  
     onClose();
   };

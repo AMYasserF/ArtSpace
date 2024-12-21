@@ -1,23 +1,15 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 const TestimonialsSection = () => {
-  const testimonials = [
-    {
-      text: "ArtSpace transformed the way I showcase my artwork. The platform is intuitive and visually stunning!",
-      name: "John Doe",
-      role: "Artist",
-    },
-    {
-      text: "I discovered so many amazing artists on ArtSpace. The auction feature is seamless and exciting!",
-      name: "Jane Smith",
-      role: "Collector",
-    },
-    {
-      text: "As a gallery owner, ArtSpace has allowed me to connect with a global audience like never before.",
-      name: "Emily Lee",
-      role: "Gallery Owner",
-    },
-  ];
+  const [testimonials, setTestimonials] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/Feedback').then((response) => {
+      setTestimonials(response.data);
+      console.log(response.data);
+    }).catch((err) => {
+      console.error('Error fetching testimonials', err);
+    });
+  }, []);
 
   return (
     <section className="testimonials">
@@ -25,7 +17,7 @@ const TestimonialsSection = () => {
       <div className="testimonials-container">
         {testimonials.map((testimonial, index) => (
           <div key={index} className="testimonial-card">
-            <p className="testimonial-text">"{testimonial.text}"</p>
+            <p className="testimonial-text">"{testimonial.description}"</p>
             <h3 className="testimonial-name">{testimonial.name}</h3>
             <p className="testimonial-role">{testimonial.role}</p>
           </div>

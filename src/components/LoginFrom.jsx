@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 const GridLoginForm = ({ onRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("Logging....");
@@ -14,6 +15,7 @@ const GridLoginForm = ({ onRegister }) => {
     console.log("Logged in successfully");
     console.log(resp);
     toast.success("Hello"+username+"! You are logged in successfully");
+      navigate("/home");
     }
   catch(err){
     if(err.response){
