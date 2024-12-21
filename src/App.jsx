@@ -23,6 +23,7 @@ import ArtistProtectedRoute from './components/ArtistProtectedRoute';
 import ClientProtectedRoute from './components/ClientProtectedRoute';
 import LoginProt from './components/LoginProtection';
 import Exhibitions from './pages/Exhibitions';
+import AuctionsWon from './pages/Auctionswon';
 //import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -81,6 +82,7 @@ function App() {
         <Route path='/followers' element={<ArtistProtectedRoute Role={role}><Followers/></ArtistProtectedRoute>} />
         <Route path='/reciepts' element={<ArtistProtectedRoute Role={role}><SoldReciepts/></ArtistProtectedRoute>} />
         <Route path='/exhibitions' element={<Exhibitions/>} />
+        <Route path='/wonAuctions' element={<ClientProtectedRoute Role={role}><AuctionsWon/></ClientProtectedRoute>} />
       </Route>
     )
   );

@@ -6,11 +6,11 @@ import axios from "axios";
 const PopupForm = ({ item, title, onClose,id }) => {
   const [auctionDetails, setAuctionDetails] = useState({
     auctionTitle: "",
-    initialBidPrice: item.baseprice,
-    startDate: item.startDate,
-    endDate: item.endDate,
+    initialBidPrice: item.startingbid,
+    startDate: new Date(item.starttime).toISOString().split("T")[0],
+    endDate: new Date(item.endtime).toISOString().split("T")[0],
   });
-
+  console.log(auctionDetails);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAuctionDetails((prevDetails) => ({

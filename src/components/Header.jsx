@@ -56,6 +56,7 @@ const Header = (props) => {
           {props.Role==='Artist'?<NavLink to="/portfolio" className="nav-link">portfolio</NavLink>:null}  
           {props.Role==='Client'?<NavLink to="/following" className="nav-link">following</NavLink>:null}
           {props.Role==='Client'?<NavLink to="/wishlist" className="nav-link">wishlist</NavLink>:null}
+          {props.Role==='Client'?<NavLink to="/wonAuctions" className="nav-link">Auctions won</NavLink>:null}
           {props.Role==='Artist'?<NavLink to="/Reciepts" className="nav-link">Sold Arts</NavLink>:null}
           {props.Role==='Artist'?<NavLink to="/followers" className="nav-link">followers</NavLink>:null} 
           {props.Logged==='true'?<NavLink to="/FeedBack" className="nav-link">Add Feedback</NavLink>:null} 

@@ -20,6 +20,7 @@ const Auctions = () => {
 
   // Opens the popup form for the selected auction
   const handleAcceptClick = (auction) => {
+    console.log(auction);
     setSelectedAuction(auction);
     setIsPopupOpen(true);
 
@@ -33,7 +34,15 @@ const Auctions = () => {
 
   // Handles rejection (logs or calls API)
   const handleRejectClick = (auction) => {
-    console.log(`Auction request for ${auction.artname} rejected.`);
+    axios.put("http://localhost:3000/admin/auction/reject", {
+      auctionId: auction.auctionid,
+    }).then((response) => {
+      console.log(response.data);
+      window.location.reload();
+    }).catch((err) => {
+      console.error("Error rejecting auction", err);
+    });
+
   };
 
   return (
