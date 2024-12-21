@@ -40,7 +40,7 @@ async function handleSubmit(e){
     formData.append('address', Address);
     formData.append('age', Age);
     formData.append('cardNumber', CardNumber);
-    formData.append('cardExpiry', Expiry ? new Date(Expiry.getTime() - Expiry.getTimezoneOffset() * 60000).toISOString():null);
+    formData.append('cardExpiry', Expiry);
     formData.append('phoneNumber', Phone);
     formData.append('image', img); // Append the file here
     console.log(formData);
@@ -77,7 +77,7 @@ catch(err){
 
         <div className="form-group">
             <label htmlFor="ProfilePicture">Profile Picture</label>
-            <input type="file" id="profileimage" name="choose a photo" accept="image/*"  onChange={(e)=>setImg(e.target.files[0])} />
+            <input type="file" id="profileimage" name="choose a photo" accept="image/*" required  onChange={(e)=>setImg(e.target.files[0])} />
           </div>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
