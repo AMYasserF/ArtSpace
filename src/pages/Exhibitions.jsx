@@ -42,12 +42,14 @@ const Exhibitions = () => {
             
             <div className="exhibition-artworks">
               <h3>Included Artworks:</h3>
+              <div className="exhibition-artworks-container">
               {exhibition.artworks.map((artwork) => (
                 <div key={artwork.artid} className="artwork">
                   <img src={artwork.photo} alt={artwork.artname} />
                   <p>{artwork.artname} by {artwork.artistName}</p>
                 </div>
               ))}
+            </div>
             </div>
 
             <button onClick={() => handleSeeArtworks(exhibition)} className="manage-artworks-button">See Artworks</button>
