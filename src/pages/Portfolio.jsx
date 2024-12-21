@@ -107,6 +107,16 @@ const Portfolio = ({viewonly , thename }) => {
 
   const handleDeleteArt=(art)=>{
     console.log(`delete art request:${art.artname}`);
+    axios.post("http://localhost:3000/artist/art/delete",{
+      artId:art.artid
+    }).then((response)=>{
+      console.log(response.data);
+      toast.success("Art deleted successfully");
+      setArts((prevArts) => prevArts.filter((item) => item.artid !== art.artid));
+    }).catch((err)=>{
+      console.error("Error deleting art",err);
+      toast.error("Failed to delete art");
+    });
     // to do -->   delete art
   }
 
