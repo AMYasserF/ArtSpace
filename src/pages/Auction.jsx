@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/Auction.css';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../css/Auction.css";
+import { ToastContainer , toast } from "react-toastify";
+import { ColorRing } from 'react-loader-spinner';
+import "react-toastify/dist/ReactToastify.css";
+import AuctionCard from "../components/auction/auctioncard.jsx";
+import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
-import axios from 'axios';
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Auction = ( ) => {
-  const [selectedAuction, setSelectedAuction] = useState(null);
-  const [userBid, setUserBid] = useState('');
+const Auction = () => {
   const [auctions, setAuctions] = useState([]);
-  useEffect(() => {
-    const fetchAuctions = async () => {
-        try {
-            // Fetch auctions from the server
-            const response=await axios.get("http://localhost:3000/client/auctions");
-            console.log(response.data);
-            setAuctions(response.data);
-        } catch (error) {
-            console.error('Error fetching auctions', error);
-        }
-    };
-    // each time the component is mounted, fetch the auctions
-    // fetch each 10 seconds      
-    fetchAuctions();
-  }, []);
+  const [loading , setloading] = useState(true);
+  const [userBid, setUserBid] = useState('');
+  const[selectedAuction , setSelectedAuction] = useState(null);
 
   const handleShow = (auction) => setSelectedAuction(auction);
   const handleClose = () => setSelectedAuction(null);
@@ -50,50 +39,50 @@ const Auction = ( ) => {
     handleClose();
   };
 
+
+  useEffect(() => {
+    const fetchAuctions = async () => {
+     
+      try {
+        const response = await axios.get("http://localhost:3000/client/auctions");
+        setAuctions(response.data);
+      } catch (error) {
+        console.error("Error fetching auctions", error);
+      }
+      finally{
+        setloading(false);
+      }
+    };
+
+    fetchAuctions();
+    const interval = setInterval(fetchAuctions, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="container mt-5">
+    <div className="auctions-container">
+        <h1 className="auction-h1">Auctions</h1>
+     {loading ? ( // Show loader while loading
+                  <div className="spinner-container">
+                    <ColorRing
+                      visible={true}
+                      height={80}
+                      width={80}
+                      ariaLabel="color-ring-loading"
+                      colors={['#83905a' , '#98a724','#868d05','#4b7c01']} 
+                    />
+                  </div>
+                ) : (<>
       <ToastContainer />
-      <h1 className="mb-4">Auctions</h1>
-      <div className="row">
-        {auctions.map((auction, index) => {
-          const currentTime = new Date();
-          const endDate=new Date(auction.endtime);
-          const startDate=new Date(auction.starttime);
-          let status = 'coming_soon';
-          let countdown = 0;
-
-          if (currentTime < startDate) {
-            status = 'coming_soon';
-            countdown = startDate - currentTime;
-          } else if (currentTime > endDate) {
-            status = 'ended';
-            countdown = 0;
-          } else {
-            status = 'ongoing';
-            console.log(endDate);
-            console.log(currentTime);
-            countdown = endDate - currentTime;
-          }
-
-          return (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Auction {index + 1}</h5>
-                  <p className="card-text">Status: {status}</p>
-                  <p className="card-text">Countdown: {countdown} ms</p>
-                  <p className="card-text">minimum bid: ${auction.startingbid}</p>
-                  <p className="card-text">Last Bid: ${auction.highestbid}</p>
-                  <p className="card-text">Winner is: {auction.winner||"no one started bidding yet !"}</p>
-                  <Button variant="primary" onClick={() => handleShow(auction)}>Place Bid</Button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {selectedAuction && (
+    
+      <div className="auctions-page-grid">
+        {auctions.map((auction) => (
+          <div key={auction.auctionid}>
+            <AuctionCard auction={auction} onClick={()=>setSelectedAuction(auction)} />
+          </div>
+        ))}
+        </div>
+        {selectedAuction && (
         <Modal show={true} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Place Bid</Modal.Title>
@@ -117,6 +106,9 @@ const Auction = ( ) => {
           </Modal.Footer>
         </Modal>
       )}
+
+      </>
+                )}
     </div>
   );
 };
