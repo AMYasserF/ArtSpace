@@ -5,11 +5,11 @@ import "../../css/exhibitions.css";
 import axios from "axios";
 
 const Exhibitions = () => {
-  // Example ongoing exhibitions data (using theme as primary key)
+ 
   const [exhibitions, setExhibitions] = useState([]);
-  const [selectedExhibition, setSelectedExhibition] = useState(null); // Tracks the exhibition being modified
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // Tracks if the create/edit exhibition popup is open
-  const [isArtworkPopupOpen, setIsArtworkPopupOpen] = useState(false); // Tracks if the artwork management popup is open
+  const [selectedExhibition, setSelectedExhibition] = useState(null); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [isArtworkPopupOpen, setIsArtworkPopupOpen] = useState(false); 
   useEffect(() => {
     axios.get("http://localhost:3000/admin/exhibition").then((response) => {
       setExhibitions(response.data);

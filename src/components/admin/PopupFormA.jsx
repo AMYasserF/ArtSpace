@@ -7,8 +7,8 @@ const PopupForm = ({ item, title, onClose,id }) => {
   const [auctionDetails, setAuctionDetails] = useState({
     auctionTitle: "",
     initialBidPrice: item.startingbid,
-    startDate: new Date(item.starttime).toISOString().split("T")[0],
-    endDate: new Date(item.endtime).toISOString().split("T")[0],
+    startDate: new Date(item.starttime),
+    endDate: new Date(item.endtime),
   });
   console.log(auctionDetails);
   const handleChange = (e) => {

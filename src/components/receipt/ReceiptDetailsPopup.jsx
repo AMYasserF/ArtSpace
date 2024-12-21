@@ -34,7 +34,7 @@ const ReceiptDetailsPopup = ({ receipt, onClose }) => {
               <h3>Transaction Details</h3>
               <p><strong>Date:</strong> {receipt.recieptdate.slice(0,10)}</p>
               <p><strong>Price Paid:</strong> {receipt.price}</p>
-              <p><strong>Card Number:</strong> **** **** **** {receipt.cardNumber.slice(-4)}</p>
+              <p><strong>Card Number:</strong> {`${'*'.repeat(receipt.cardNumber.length - 4)}${receipt.cardNumber.slice(-4)}`}</p>
             </div>
           </div>
         </div>

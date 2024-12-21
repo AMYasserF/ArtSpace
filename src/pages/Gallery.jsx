@@ -11,7 +11,7 @@ import { ColorRing } from 'react-loader-spinner';
 import { useRef } from 'react';
 
 
-const Gallery = (Logged) => {
+const Gallery = ({Logged , formexhibition  , artworks}) => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [wishlist , setWishlist] = useState([]);
   const [arts, setArts] = useState([]);
@@ -31,12 +31,16 @@ const Gallery = (Logged) => {
           setWishlist(result.data);
           fetchedWishlist = result.data;
         }
-  
-        // Fetch the arts
-        const response = await axios.get("http://localhost:3000/arts");
-        const fetchedArts = response.data;
-  
-        // Check each art against the wishlist
+
+        let fetchedArts;
+
+        if (formexhibition) {
+          fetchedArts = artworks; 
+        } else {
+          const response = await axios.get("http://localhost:3000/arts"); 
+          fetchedArts = response.data; 
+        }
+        
         const updatedArts = fetchedArts.map((art) => ({
           ...art,
           inWishlist: fetchedWishlist.some((wishlistArt) => wishlistArt.artid === art.artid),
