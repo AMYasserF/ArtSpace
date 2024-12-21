@@ -2,6 +2,7 @@ import React, { useState }  from "react";
 import axios  from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 const apiUrl = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 function getCookie(name) {
@@ -26,7 +27,7 @@ const GridRegistrationForm = ({ onBack }) => {
   const [Phone,setPhone]=useState("");
   const [reg,setReg]=useState(false);
   const [img,setImg]=useState(null);
-
+  const navigate = useNavigate();
 async function handleSubmit(e){
     e.preventDefault();
     const formData = new FormData();
@@ -56,6 +57,7 @@ const token = getCookie('Role');
 console.log(token);
 console.log("Registered");
 toast.success("Registered Successfully");
+navigate("/home");
 }
 catch(err){
   console.log("Error in registration");

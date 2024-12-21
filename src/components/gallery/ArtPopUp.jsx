@@ -122,7 +122,7 @@ const ArtPopUp = ({ post, onClose , theArtist , onSave,addtowishlist ,removewish
 
             {theArtist === false && <div className="popup-creator-info-art">
               <img
-                src={post.profilePic}
+                src={post.artistPic}
                 alt={`${post.artistName}'s profile`}
                 className="popup-profile-pic-art"
               />
