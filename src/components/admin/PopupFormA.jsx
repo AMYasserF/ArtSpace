@@ -3,12 +3,14 @@ import "../../css/popupForm.css";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { format } from "date-fns";
+
 const PopupForm = ({ item, title, onClose,id }) => {
   const [auctionDetails, setAuctionDetails] = useState({
     auctionTitle: "",
     initialBidPrice: item.startingbid,
-    startDate: new Date(item.starttime).toISOString().split("T")[0],
-    endDate: new Date(item.endtime).toISOString().split("T")[0],
+    startDate: format(new Date(item.starttime), "yyyy-MM-dd"),
+    endDate: format(new Date(item.endtime), "yyyy-MM-dd"),
   });
   console.log(auctionDetails);
   const handleChange = (e) => {
