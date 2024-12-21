@@ -1,0 +1,45 @@
+.auction-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  max-width: 85%; /* Make the card narrower */
+  margin: 0 auto; /* Center align the card within the column */
+}
+
+.auction-card:hover {
+  transform: scale(1.05);
+}
+
+.auction-card-img-top {
+  width: 80%;
+  height: 80%; /* Adjust the height to fit the narrower width */
+  object-fit: cover;
+}
+
+.auction-card-body {
+  padding: 15px;
+}
+
+.auction-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.auction-card-text {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.auction-artist-profile-img {
+  width: 40px; /* Smaller profile image */
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.auction-d-flex {
+  align-items: center;
+}
