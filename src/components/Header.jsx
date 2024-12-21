@@ -19,7 +19,7 @@ const Header = (props) => {
       setIsCollapsed(!isCollapsed);
     };
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark headerbg">
+    <nav className="navbar navbar-expand-lg navbar-dark headerbg" style={{zIndex:3}}>
             <div className="container">
         {/* Logo */}
         <div className="logo">

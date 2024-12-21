@@ -18,6 +18,8 @@ import Reciepts from './pages/receipts';
 import Wishlist from './pages/wishlist';
 import Auction from './pages/Auction';
 import Followers from './pages/followers';
+import SoldReciepts from './pages/SoldArts';
+import ArtistProtectedRoute from './components/ArtistProtectedRoute';
 //import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -63,7 +65,7 @@ function App() {
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/gallery' element={<Gallery Logged={logged}/>} />
-        <Route path='/portfolio' element={<Portfolio     viewonly={false} />  } />
+        <Route path='/portfolio' element={<ArtistProtectedRoute Role={role}><Portfolio viewonly={false}/></ArtistProtectedRoute>  } />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
         <Route path='/artists' element={<Artists />} />
         <Route path='/following' element={<Followings />} />
@@ -73,7 +75,8 @@ function App() {
         <Route path='/Purchase-history' element={<Reciepts/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path='/auctions' element={<Auction />} />
-        <Route path='/followers' element={<Followers/>} />
+        <Route path='/followers' element={<ArtistProtectedRoute Role={role}><Followers/></ArtistProtectedRoute>} />
+        <Route path='/reciepts' element={<ArtistProtectedRoute Role={role}><SoldReciepts/></ArtistProtectedRoute>} />
       </Route>
     )
   );
