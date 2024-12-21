@@ -20,6 +20,9 @@ import Auction from './pages/Auction';
 import Followers from './pages/followers';
 import SoldReciepts from './pages/SoldArts';
 import ArtistProtectedRoute from './components/ArtistProtectedRoute';
+import ClientProtectedRoute from './components/ClientProtectedRoute';
+import LoginProt from './components/LoginProtection';
+import Exhibitions from './pages/Exhibitions';
 //import { get } from '../../../Backend/Art_ExhibitionBackend/Art_ExhibitionBackend/routes/artist';
 
 //import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -64,19 +67,20 @@ function App() {
         <Route index element={<Home />} />
         <Route path='/home' element={<Home Logged={logged} name={name}/>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/gallery' element={<Gallery Logged={logged}/>} />
+        <Route path='/gallery' element={<ClientProtectedRoute Role={role}><Gallery Logged={logged}/></ClientProtectedRoute>} />
         <Route path='/portfolio' element={<ArtistProtectedRoute Role={role}><Portfolio viewonly={false}/></ArtistProtectedRoute>  } />
         <Route path='/admin' element={<AdminDashboard  Logged={logged} Role={role} />} />
-        <Route path='/artists' element={<Artists />} />
-        <Route path='/following' element={<Followings />} />
-        <Route path='/Settings' element={<Settings/>} />
+        <Route path='/artists' element={<ClientProtectedRoute Role={role}><Artists /></ClientProtectedRoute>} />
+        <Route path='/following' element={<ClientProtectedRoute Role={role}><Followings /></ClientProtectedRoute>} />
+        <Route path='/Settings' element={<LoginProt Logged={logged}><Settings/></LoginProt>} />
         <Route path='/Feedback' element={<FeedBack/>} />
         <Route path ='/portfolio/preview/:artistname' element={<Portfolio viewonly={true} />} />
-        <Route path='/Purchase-history' element={<Reciepts/>}/>
-        <Route path='/wishlist' element={<Wishlist/>}/>
-        <Route path='/auctions' element={<Auction />} />
+        <Route path='/Purchase-history' element={<ClientProtectedRoute  Role={role}><Reciepts/></ClientProtectedRoute>}/>
+        <Route path='/wishlist' element={<ClientProtectedRoute  Role={role}><Wishlist/></ClientProtectedRoute>}/>
+        <Route path='/auctions' element={<ClientProtectedRoute  Role={role}><Auction /></ClientProtectedRoute>} />
         <Route path='/followers' element={<ArtistProtectedRoute Role={role}><Followers/></ArtistProtectedRoute>} />
         <Route path='/reciepts' element={<ArtistProtectedRoute Role={role}><SoldReciepts/></ArtistProtectedRoute>} />
+        <Route path='/exhibitions' element={<Exhibitions/>} />
       </Route>
     )
   );

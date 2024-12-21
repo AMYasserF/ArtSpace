@@ -22,6 +22,7 @@ const Auctions = () => {
   const handleAcceptClick = (auction) => {
     setSelectedAuction(auction);
     setIsPopupOpen(true);
+
   };
 
   // Closes the popup form
@@ -32,7 +33,7 @@ const Auctions = () => {
 
   // Handles rejection (logs or calls API)
   const handleRejectClick = (auction) => {
-    console.log(`Auction request for ${auction.artName} rejected.`);
+    console.log(`Auction request for ${auction.artname} rejected.`);
   };
 
   return (
@@ -41,9 +42,9 @@ const Auctions = () => {
       <div className="auction-cards">
         {auctionRequests.map((auction) => (
           <div key={auction.id} className="auction-card">
-            <img src={auction.artPhoto} alt={auction.artName} />
-            <h2>{auction.artName}</h2>
-            <p>Artist: {auction.artistName}</p>
+            <img src={auction.photo} alt={auction.artname} />
+            <h2>{auction.artname}</h2>
+            <p>Artist: {auction.name}</p>
             <div className="card-buttons">
               <button
                 className="accept-button"
@@ -63,6 +64,7 @@ const Auctions = () => {
       </div>
       {isPopupOpen && (
         <PopupForm
+          id={selectedAuction.id}
           item={selectedAuction}
           title="Enter Auction Details"
           onClose={handleClosePopup}

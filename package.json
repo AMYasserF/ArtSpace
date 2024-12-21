@@ -32,6 +32,7 @@
     "react-router-dom": "^7.0.1",
     "react-scrollable-feed": "^2.0.2",
     "react-toastify": "^10.0.6",
+    "socket.io-client": "^4.8.1",
     "stylis": "^4.3.4"
   },
   "devDependencies": {

@@ -8,7 +8,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import { ColorRing } from 'react-loader-spinner';
-
+import 'react-toastify/dist/ReactToastify.css';
 import '../css/Portfolio.css';
 
 const Portfolio = ({viewonly , thename }) => {
@@ -32,6 +32,7 @@ const Portfolio = ({viewonly , thename }) => {
         if (viewonly) {
           const wishlistResponse = await axios.get("http://localhost:3000/client/getWishlist");
           fetchedWishlist = wishlistResponse.data;
+          console.log(fetchedWishlist);
           setWishlist(fetchedWishlist);
         }
   
@@ -40,7 +41,7 @@ const Portfolio = ({viewonly , thename }) => {
           artistname: requiredName,
         });
         const fetchedArts = artsResponse.data;
-  
+        console.log(fetchedArts);
         // Check each art against the wishlist
         const updatedArts = fetchedArts.map((art) => ({
           ...art,
@@ -96,9 +97,11 @@ const Portfolio = ({viewonly , thename }) => {
         startingPrice:request.basePrice,
       })
 
-
+      console.log(result.data);
+      toast.success("Auction Requested Successfully");
     }catch(err){
       console.log("failed to request an auction" , err.message);
+      toast.error("Failed to request an auction");
     }
   };
 

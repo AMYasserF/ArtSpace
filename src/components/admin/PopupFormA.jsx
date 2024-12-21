@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "../../css/popupForm.css";
-
-const PopupForm = ({ item, title, onClose }) => {
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+const PopupForm = ({ item, title, onClose,id }) => {
   const [auctionDetails, setAuctionDetails] = useState({
     auctionTitle: "",
-    initialBidPrice: "",
-    startDate: "",
-    endDate: "",
+    initialBidPrice: item.baseprice,
+    startDate: item.startDate,
+    endDate: item.endDate,
   });
 
   const handleChange = (e) => {
@@ -23,31 +25,35 @@ const PopupForm = ({ item, title, onClose }) => {
       `Auction created for ${item.artName}:`,
       auctionDetails
     );
-    onClose(); // Close the popup after submission
+    console.log(item.auctionid);
+    axios.put("http://localhost:3000/admin/auction/approve", {
+      auctionId: item.auctionid,
+      startingPrice: auctionDetails.initialBidPrice,
+      startDate: auctionDetails.startDate,
+      endDate: auctionDetails.endDate,
+    }).then((response) => {
+      console.log(response.data);
+      toast.success("Auction created successfully");
+    }).catch((err) => {
+      console.error("Error creating auction", err);
+      toast.error("Failed to create auction");
+    });
+    setTimeout(() => {
+     // onClose();
+    }, 1000);
   };
 
   return (
     <div className="popup-overlay">
+      <ToastContainer />
       <div className="popup">
         <h2>{title}</h2>
         <p>Art: {item.artName}</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="auctionTitle">Auction Title</label>
-            <input
-              type="text"
-              id="auctionTitle"
-              name="auctionTitle"
-              value={auctionDetails.auctionTitle}
-              onChange={handleChange}
-              placeholder="Enter auction title"
-              required
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="initialBidPrice">Initial Bid Price</label>
             <input
-              type="number"
+              type="integer"
               id="initialBidPrice"
               name="initialBidPrice"
               value={auctionDetails.initialBidPrice}
