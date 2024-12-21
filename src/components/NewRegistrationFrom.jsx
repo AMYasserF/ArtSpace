@@ -39,7 +39,7 @@ async function handleSubmit(e){
     formData.append('address', Address);
     formData.append('age', Age);
     formData.append('cardNumber', CardNumber);
-    formData.append('cardExpiry', Expiry);
+    formData.append('cardExpiry', Expiry ? new Date(Expiry.getTime() - Expiry.getTimezoneOffset() * 60000).toISOString():null);
     formData.append('phoneNumber', Phone);
     formData.append('image', img); // Append the file here
     console.log(formData);
