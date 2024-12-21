@@ -25,6 +25,7 @@
 .logo {
   display: flex;
   align-items: center;
+  margin-right: 20rem;
 }
 
 .logo-img {
@@ -35,7 +36,7 @@
 .logo-text {
   font-size: 1.5rem;
   font-family: 'serif';
-  color: #000000; /* Black text */
+  color: #ffffff; 
   margin-left: 10px;
   font-weight: 700;
 }
@@ -43,7 +44,7 @@
 .nav-links {
   display: flex;
   gap: 2rem;
-  margin-left: auto;
+  margin-left: 4rem;
 }
 
 .nav-link {
@@ -634,7 +635,7 @@
 
 /* General styles */
 .auth-background {
-  height: 120vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -645,8 +646,9 @@
 
 /* Form container */
 .grid-registration-container {
-  width: 600px;
+  
   padding: 2rem;
+  margin: 50px;
   background: #f9f9f9;
   border: 1px solid rgba(255, 215, 0, 0.5); 
   border-radius: 10px;
@@ -669,21 +671,17 @@
 /* Form styles */
 .grid-registration-form {
   display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(6,1fr);
       gap: .5em;
       column-gap: 1em;
 }
 
-/* Full-width fields */
-.grid-registration-form .form-group {
-  display: flex;
-  flex-direction: column;
-}
 
 .grid-registration-form .form-group label {
   color: black;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .grid-registration-form .form-group input,
@@ -697,10 +695,57 @@
   border:1px solid gold;
   color: black;
 }
+.profilepicture
+{
+  grid-column: span 4;
+}
+.fullname
+{
+  grid-column: span 2;
+
+}
+.email
+{
+  grid-column: span 2;
+}
+.username
+{
+  grid-column: span 2;
+}
+.password
+{
+grid-column: span 2;
+}
+
+.visacard
+{
+  grid-column: span 2;
+}
+
+.age
+{
+
+}
+.role
+{
+  grid-column: span 2;
+}
+.gender
+{
+
+}
+.address
+{
+  grid-column: span 3;
+}
+.submit-button
+{
+  grid-column: span 1;
+}
 
 /* Buttons */
 .grid-registration-form .form-buttons {
-  grid-column: span 2;
+  grid-column: span 1;
   display: flex;
   justify-content: space-between;
 }
@@ -737,6 +782,53 @@
   .grid-registration-form {
     grid-template-columns: 1fr;
   }
+  .profilepicture
+{
+  grid-column: span 1;
+}
+.fullname
+{
+  grid-column: span 1;
+
+}
+.email
+{
+  grid-column: span 1;
+}
+.username
+{
+  grid-column: span 1;
+}
+.password
+{
+grid-column: span 1;
+}
+
+.visacard
+{
+  grid-column: span 1;
+}
+
+.age
+{
+
+}
+.role
+{
+  grid-column: span 1;
+}
+.gender
+{
+
+}
+.address
+{
+  grid-column: span 1;
+}
+.submit-button
+{
+  grid-column: span 1;
+}
 
   .grid-registration-container {
     width: 90%;
