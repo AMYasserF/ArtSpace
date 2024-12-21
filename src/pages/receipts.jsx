@@ -61,7 +61,7 @@ const Reciepts = () => {
 
         <div className='receipt-preview-info'>
         <h3 className='receipt-preview-art-name' >  {receipt.artname}    </h3>
-        <p className='receipt-preview-artist-name'> {receipt.artistname}      </p>
+        <p className='receipt-preview-artist-name'> {receipt.artistname}  </p>
         <p className='receipt-preview-payed'> price:{receipt.price}      </p>
         </div>
         

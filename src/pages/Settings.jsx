@@ -39,6 +39,7 @@ const Settings = () => {
         if (data.expiredate) {
           const utcDate = new Date(data.expiredate); // Parse UTC date
           setCardExpireDate(utcDate); // Directly use the Date object
+          console.log(utcDate);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);

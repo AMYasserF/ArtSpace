@@ -15,7 +15,7 @@ const Auction = () => {
   const [userBid, setUserBid] = useState('');
   const[selectedAuction , setSelectedAuction] = useState(null);
 
-  const handleShow = (auction) => setSelectedAuction(auction);
+
   const handleClose = () => setSelectedAuction(null);
 
   const handleBidChange = (e) => setUserBid(e.target.value);

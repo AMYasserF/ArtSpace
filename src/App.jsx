@@ -83,6 +83,7 @@ function App() {
         <Route path='/reciepts' element={<ArtistProtectedRoute Role={role}><SoldReciepts/></ArtistProtectedRoute>} />
         <Route path='/exhibitions' element={<Exhibitions/>} />
         <Route path='/wonAuctions' element={<ClientProtectedRoute Role={role}><AuctionsWon/></ClientProtectedRoute>} />
+        
       </Route>
     )
   );
