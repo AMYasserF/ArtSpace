@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PortfolioCard from '../components/Portfolio/PortofolioCard.jsx';
 import ArtPopUp from '../components/gallery/ArtPopUp';
 import AddArtPopup from '../components/Portfolio/AddArtPopup.jsx';
-import RequestAuction from '../components/Portfolio/RequestAuctionPopup.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
@@ -15,78 +14,96 @@ import '../css/Portfolio.css';
 const Portfolio = ({viewonly , thename }) => {
   const [selectedArt, setSelectedArt] = useState(null);
   const [addArt , setAddArt] = useState(false);
-  const [requestAuction , setRequestAuction] = useState(false);
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [wishlist , setWishlist] = useState([]);
 
   const { artistname } = useParams(); 
 
   useEffect(() => {
-    
-    const fetchArts = async () => {
-
+    const fetchArtsAndWishlist = async () => {
       const requiredName = viewonly ? artistname : thename;
-    
-      
+  
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:3000/client/arts" ,  {
-          artistname : requiredName
+  
+        
+        let fetchedWishlist = [];
+        if (viewonly) {
+          const wishlistResponse = await axios.get("http://localhost:3000/client/getWishlist");
+          fetchedWishlist = wishlistResponse.data;
+          setWishlist(fetchedWishlist);
+        }
+  
+        // Fetch the arts
+        const artsResponse = await axios.post("http://localhost:3000/client/arts", {
+          artistname: requiredName,
         });
-        // const response = await axios.get("http://localhost:3000/artist/arts");
-         setArts(response.data);
+        const fetchedArts = artsResponse.data;
+  
+        // Check each art against the wishlist
+        const updatedArts = fetchedArts.map((art) => ({
+          ...art,
+          inWishlist: fetchedWishlist.some((wishlistArt) => wishlistArt.artid === art.artid),
+        }));
+  
+        setArts(updatedArts);
       } catch (error) {
-        console.log("Error fetching user arts", error.response?.data || error.message);
-      }
-      finally{
+        console.error("Error fetching arts or wishlist", error.response?.data || error.message);
+      } finally {
         setLoading(false);
       }
     };
+  
+    fetchArtsAndWishlist();
+  }, [viewonly, artistname, thename]);
 
-    fetchArts();
-  },  [viewonly, artistname, thename]); // Empty dependency array ensures this runs only once on mount
- 
-  const handleEditSave = (updatedArt) => {
+  const handleEditSave = async (updatedArt) => {
+    try {
     setArts((prevArts) =>
-      prevArts.map((art) => (art.id === updatedArt.id ? updatedArt : art))
+      prevArts.map((art) => (art.artid === updatedArt.artid ? updatedArt : art))
     );
+    const result = await axios.put("http://localhost:3000/arts/edit" , updatedArt)
+    setSelectedArt(null);
+   // console.log(result.data);
+   toast.success("art updated successfully");
+
+  }
+  catch (error) {
+    if(error.response){
+      toast.error(error.response.data);
+    }
+    else
+      toast.error("Internal server error sorry !");
+    console.error("Error updating art:", error.response?.data || error.message);
+  }
   };
   
-  const handleArtClick = (art) => {
+  const handleArtClick =  (art) => {
     setSelectedArt(art);
   };
 
-  const handleAuctionRequest = (art , request) => {
+  const handleAuctionRequest = async (art , request) => {
    
     console.log(art);
     console.log(request);
-    axios.post("http://localhost:3000/artist/art/auction",{
-      artId: art.id,
-      basePrice: request.basePrice,
-      startDate: request.startDate,
-      endDate: request.endDate
-    }).then((response)=>{
-      console.log(response.data);
-      toast.success("Auction Requested Successfully");
-    }).catch((err)=>{
-      console.log("Error in requesting auction");
-      toast.error("Could not request auction");
-    });
-    //  ---> todo backend
+
+    try{
+      const result = await axios.post("http://localhost:3000/artist/art/auction" , {
+        artId:art.artid,
+        startDate:request.startdate,
+        endDate: request.enddate,
+        startingPrice:request.basePrice,
+      })
+
+
+    }catch(err){
+      console.log("failed to request an auction" , err.message);
+    }
   };
 
   const handleDeleteArt=(art)=>{
-    console.log(`delete art request:${art.title}`);
-    axios.post("http://localhost:3000/artist/art/delete",{
-      artId:art.artid
-    }).then((response)=>{
-      console.log(response.data);
-      toast.success("Art deleted successfully");
-    }).catch((err)=>{
-      console.log(err);
-      console.log("Error in deleting art");
-      toast.error("Error "+err.response.data);
-    });
+    console.log(`delete art request:${art.artname}`);
     // to do -->   delete art
   }
 
@@ -128,13 +145,16 @@ const Portfolio = ({viewonly , thename }) => {
     }
   };
 
-  function handleAddArtToWishlist(art){
+  async function handleAddArtToWishlist(art){
+    console.log(art);
     try{
-      const response = axios.post("http://localhost:3000/client/addWishlist",{
+      const response = await axios.post("http://localhost:3000/client/addWishlist",{
         artId:art.artid
       });
       console.log(response.data);
       toast.success("Added to wishlist Successfully");
+      setWishlist([...wishlist , art])
+      art.inWishlist = true;
     }
       catch(err)
       {
@@ -142,6 +162,27 @@ const Portfolio = ({viewonly , thename }) => {
         toast.error("Could not be added to wishlist");
       }
     }
+
+    async function handleRemovefromWishlsit (art) {
+      console.log("art removed from wishlist:" + art.artname);
+
+      try{
+          const response = await axios.delete("http://localhost:3000/client/RemoveWishlist",{
+            params: { artId: art.artid }
+          });
+          console.log(response.data);
+          toast.success("Removed from wishlist");
+          setWishlist(prevWishlist => prevWishlist.filter(item => item.id !== art.id));
+          art.inWishlist = false;
+          
+         
+        }
+        catch(err){
+          console.log("Error in removing from wishlist");
+          toast.error("Error Removing form Wishlist");
+        }
+      }
+
     
   return (
     <div className="portfolio">
@@ -177,8 +218,8 @@ const Portfolio = ({viewonly , thename }) => {
           <FontAwesomeIcon icon={faPalette}  style={{ fontSize: '1.5em', color: '#dfdf82' }} />
         </button>}
       </div>
-      {console.log(viewonly)}
-      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowhishlist={handleAddArtToWishlist}/>}
+      
+      {selectedArt && <ArtPopUp post={selectedArt} onClose={() => setSelectedArt(null)} theArtist={!viewonly}  onSave={handleEditSave} addtowishlist={handleAddArtToWishlist} removewishlist={handleRemovefromWishlsit} inWishlist={selectedArt.inWishlist}/>}
       {addArt && <AddArtPopup onClose = {() =>setAddArt(false)} onAdd={handleAddArt}/>}
      
       </>)}

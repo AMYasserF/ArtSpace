@@ -19,68 +19,39 @@ const Gallery = (Logged) => {
   const hasUpdatedArts = useRef(false); 
 
   useEffect(() => {
-    let isMounted = true; 
-
-    const fetchArts = async () => {
+    const fetchArtsAndWishlist = async () => {
+  
       try {
-        setLoading(true); // Start loading
-        const response = await axios.get("http://localhost:3000/arts");
-        if (isMounted) {
-        setArts(response.data);
-        console.log(response.data);
+        setLoading(true);
+  
+        
+        let fetchedWishlist = [];
+        if (Logged) {
+          const result = await axios.get("http://localhost:3000/client/getWishlist");
+          setWishlist(result.data);
+          fetchedWishlist = result.data;
         }
+  
+        // Fetch the arts
+        const response = await axios.get("http://localhost:3000/arts");
+        const fetchedArts = response.data;
+  
+        // Check each art against the wishlist
+        const updatedArts = fetchedArts.map((art) => ({
+          ...art,
+          inWishlist: fetchedWishlist.some((wishlistArt) => wishlistArt.artid === art.artid),
+        }));
+  
+        setArts(updatedArts);
       } catch (error) {
-        console.log("Error fetching user arts", error.response?.data || error.message);
+        console.error("Error fetching arts or wishlist", error.response?.data || error.message);
+      } finally {
+        setLoading(false);
       }
-      finally{
-        setLoading(false); // Stop loading
-      }
-    
-  }
-    fetchArts();
-    return () => {
-      isMounted = false; // Cleanup to prevent state updates after unmount
     };
-    
-  }, []); // Empty dependency array ensures this runs only once on mount
-
-  const fetchwishlist = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("http://localhost:3000/client/getWishlist");
-      setWishlist(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log("Error fetching wishlists", error.response?.data || error.message);
-    }
-    finally{
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    console.log("Logged:", Logged);
-    if(Logged==="true"){
-      console.log("Fetching wishlist");
-    fetchwishlist();
-  }
-}, []); 
-
-
-  useEffect(() => {
-   
-    if (!hasUpdatedArts.current && arts.length > 0 && wishlist.length >= 0) {
-      const updatedArts = arts.map(art => ({
-        ...art,
-        inWishlist: wishlist.some(item => item.artid === art.artid),
-      }));
-      console.log("Updated Arts:", updatedArts);
-      setArts(updatedArts); 
-      hasUpdatedArts.current = true; 
-    }
-  }, [arts, wishlist]);
-
-
+  
+    fetchArtsAndWishlist();
+  }, []);
 
   function handlePostClick (post){
     console.log (post);
@@ -97,7 +68,7 @@ const Gallery = (Logged) => {
       console.log(response.data);
       toast.success("Added to wishlist Successfully");
       setWishlist([...wishlist , art])
-        hasUpdatedArts.current = false;
+      art.inWishlist =true;
     }
       catch(err)
       {
@@ -116,7 +87,7 @@ const Gallery = (Logged) => {
           console.log(response.data);
           toast.success("Removed from wishlist");
           setWishlist(prevWishlist => prevWishlist.filter(item => item.id !== art.id));
-          hasUpdatedArts.current = false;
+          art.inWishlist=false;
          
         }
         catch(err){
@@ -137,21 +108,21 @@ const Gallery = (Logged) => {
     setSelectedPost(null);
 
   }
-    const posts = [];
-      arts.map((art) =>{
-        posts.push({
-          artid: art.artid,
-          artname: art.artname,
-          photo: art.photo,
-          description: art.description,
-          artistName: art.artistName,
-          artistId: art.artistId,
-          baseprice: art.baseprice,
-          createdAt: art.realeasedate,
-          profilePic: art.artistPic,
-          inWishlist: art.inWishlist
-        });
-      })
+    // const posts = [];
+    //   arts.map((art) =>{
+    //     posts.push({
+    //       artid: art.artid,
+    //       artname: art.artname,
+    //       photo: art.photo,
+    //       description: art.description,
+    //       artistName: art.artistName,
+    //       artistId: art.artistId,
+    //       baseprice: art.baseprice,
+    //       createdAt: art.realeasedate,
+    //       profilePic: art.artistPic,
+    //       inWishlist: art.inWishlist
+    //     });
+    //   })
   return (
     <div className="gallery">
       {loading ? ( // Show loader while loading
@@ -166,7 +137,7 @@ const Gallery = (Logged) => {
               </div>
             ) : (<>
       <ToastContainer/>
-      {posts.map((post) => (
+      {arts.map((post) => (
         <Post 
         key={post.artid}
         post={post} 
