@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Toast } from "bootstrap";
 
 const AuctionsWon = () => {
   const [wonAuctions, setWonAuctions] = useState([]);
@@ -7,7 +10,7 @@ const AuctionsWon = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/client/auctions/won")
+    axios.get("http://localhost:3000/client/wonAuctions")
       .then((response) => {
         console.log(response.data);
         setWonAuctions(response.data);
@@ -21,17 +24,16 @@ const AuctionsWon = () => {
 
   const handlePayAndGenerateReceipt = (auction) => {
     axios.post(`http://localhost:3000/client/buy/auction`,{
-        artId: auction.id,
+        artId: auction.artid,
         price: auction.highestbid,
         description: "Payment for auction",
     })
       .then((response) => {
-        alert("Payment successful and receipt generated!");
-        // Optionally, update the state to reflect the payment status
+        toast.success("Payment successful ,Congrats, the digital copy of this art is now yours !");
       })
       .catch((err) => {
         console.error("Error generating receipt", err);
-        alert("Failed to generate receipt. Please try again.");
+        toast.error("Error generating receipt");
       });
   };
 
@@ -40,20 +42,23 @@ const AuctionsWon = () => {
 
   return (
     <div className="container mt-5">
+      <ToastContainer/>
       <h1 className="mb-4">Won Auctions</h1>
       <div className="row">
         {wonAuctions.map((auction) => (
           <div key={auction.id} className="auction-card">
-            <h2>{auction.title}</h2>
-            <p><strong>Winning Bid:</strong> ${auction.winningBid}</p>
-            <p><strong>End Date:</strong> {new Date(auction.endDate).toLocaleDateString()}</p>
-            <button 
+            <h2>{auction.artname}</h2>
+            <p><strong>Winning Bid:</strong> ${auction.highestbid}</p>
+            <p><strong>End Date:</strong> {new Date(auction.endtime).toLocaleDateString()}</p>
+            <div><img src={auction.photo} alt={auction.artname} /></div>
+            {!(auction.paid===true)?<button 
               onClick={() => handlePayAndGenerateReceipt(auction)} 
               className="btn btn-primary"
             >
               Pay and Generate Receipt
-            </button>
+            </button>:<p>Congrats, the digital copy of this art is now yours !</p>}
           </div>
+          
         ))}
       </div>
     </div>

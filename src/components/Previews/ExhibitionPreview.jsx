@@ -13,12 +13,16 @@ function ExhibitionsPreview() {
       console.error('Error fetching exhibitions', err);
     });
   }, []);
+  let photo = null;
+  if(exhibitions&&exhibitions.length>0&&exhibitions[0].artworks&&exhibitions[0].artworks.length>0){
+    photo = exhibitions[0].artworks[0].photo;
+  }
 
   return (
     <div className="exhibitions">
       <h2>Exhibitions</h2>
       {exhibitions.map(exhibition => (
-        <Card key= {exhibition.id} Image={exhibition.artworks[0].photo||null} title={exhibition.theme} description={`Status: running`} />
+        <Card key= {exhibition.id} Image={photo} title={exhibition.theme} description={`Status: running`} />
       ))}
     </div>
   );
